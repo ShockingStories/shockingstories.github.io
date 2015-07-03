@@ -15,6 +15,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
     .style("fill", function (d) {
       return "rgb(" + randomRGB() + "," + randomRGB() + "," + randomRGB() + ")";
     });
+
+  d3.select("#slider").call(
+    d3.slider()
+      .value( [ 100, 90, 80, 70, 60, 50, 40, 30, 20, 10 ])
+      .orientation('vertical')
+  );
 });
 
 function randomRGB () {
