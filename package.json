@@ -1,0 +1,32 @@
+{
+  "name": "shocking",
+  "version": "0.0.1",
+  "description": "Shocking Stories",
+  "main": "js/all.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shockingstories/shocking.git"
+  },
+  "keywords": [
+    "shocking",
+    "stories",
+    "power",
+    "zealand",
+    "greenhouse",
+    "emissions"
+  ],
+  "author": "rich.churcher@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shockingstories/shocking/issues"
+  },
+  "homepage": "https://github.com/shockingstories/shocking#readme",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-sourcemaps": "^1.5.2",
+    "gulp-strip-debug": "^1.0.2"
+  }
+}
