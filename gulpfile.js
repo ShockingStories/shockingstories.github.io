@@ -6,7 +6,8 @@ var sourcemaps = require('gulp-sourcemaps');
  
 gulp.task('js', function () {
   return gulp.src([
-      'js/**/*.js', 
+      '!js/all.js',
+      'js/**/*.js' 
     ])
     .pipe(sourcemaps.init())
       .pipe(concat('js/all.js'))
