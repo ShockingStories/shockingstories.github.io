@@ -8,13 +8,155 @@
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.js"></script>
     <script type="text/javascript" src="/js/all.js"></script>
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
-    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.js">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" type="text/css" href="">
     <link rel="stylesheet" type="text/css" href="css/layout.css">
   </head>
 
   <body>
   <div class="container">
-
+<h1>Shocking Stories</h1>
+<div class="row metrics">
+  <div class="col-sm-3">
+    <i class="fa fa-cloud"></i>
+    <div id="co2-chart"></div>
+    <h3>1000 Gt</h3>
+    <h3>CO2 Emissions</h3>
   </div>
+  <div class="col-sm-3">
+    <i class="fa fa-bolt"></i>
+    <div id="gwh-chart"></div>
+    <h3>1000 GWh</h3>
+    <h3>Power Generated</h3>
+  </div>
+  <div class="col-sm-3">
+    <i class="fa fa-dollar"></i>
+    <div id="cost-chart"></div>
+    <h3>$100 million</h3>
+    <h3>per Year</h3>
+  </div>
+  <div class="col-sm-3">
+    <i class="fa fa-university"></i>
+    <div id="investment-chart"></div>
+    <h3>$100 billion</h3>
+    <h3>Investment </h3>
+  </div>
+</div>
+
+<h2>What can I do?</h2>
+
+<div class="row decisions">
+
+  <div class="col-md-6 media">
+    <div class="media-left">
+      <i class="fa fa-car"></i>
+    </div>
+    <div class="media-body">
+      <h3 class="media-heading">Buy an Electric Car</h3>
+        <form>
+          <input type="number" name="amountInput" min="0" max="100" value="0" oninput="this.form.amountRange.value=this.value" /> 
+          <p class="unit">%</p>
+          <input type="range" name="amountRange" min="0" max="100" value="0" oninput="this.form.amountInput.value=this.value" />
+        </form>
+        <p class="description">Of NZ's cars are electric</p>
+    </div>
+  </div>
+
+  <div class="col-md-6 media">
+    <div class="media-left">
+      <i class="fa fa-sun-o"></i>
+    </div>
+    <div class="media-body">
+      <h3 class="media-heading">Install Solar Panels</h3>
+        <form>
+          <input type="number" name="amountInput" min="0" max="100" value="0" oninput="this.form.amountRange.value=this.value" /> 
+          <p class="unit">Homes</p>
+          <input type="range" name="amountRange" min="0" max="100" value="0" oninput="this.form.amountInput.value=this.value" />
+        </form>
+        <p class="description">in NZ have Solar Panels</p>
+    </div>
+  </div>
+
+  <div class="col-md-6 media">
+    <div class="media-left">
+      <i class="fa fa-home"></i>
+    </div>
+    <div class="media-body">
+      <h3 class="media-heading">Insulate you house</h3>
+        <form>
+          <input type="number" name="amountInput" min="0" max="100" value="0" oninput="this.form.amountRange.value=this.value" /> 
+          <p class="unit">%</p>
+          <input type="range" name="amountRange" min="0" max="100" value="0" oninput="this.form.amountInput.value=this.value" />
+        </form>
+        <p class="description">Homes in NZ are insulated</p>
+    </div>
+  </div>
+
+
+  <div class="col-md-6 media">
+    <div class="media-left">
+      <i class="fa fa-power-off"></i>
+    </div>
+    <div class="media-body">
+      <h3 class="media-heading">Turn off that light</h3>
+        <form>
+          <input type="number" name="amountInput" min="0" max="100" value="0" oninput="this.form.amountRange.value=this.value" /> 
+          <p class="unit">Minutes</p>
+          <input type="range" name="amountRange" min="0" max="100" value="0" oninput="this.form.amountInput.value=this.value" />
+        </form>
+        <p class="description">Average light usage per person in NZ</p>
+    </div>
+  </div>
+
+  <div class="col-md-6 media">
+    <div class="media-left">
+      <img src=windmill.png>
+    </div>
+    <div class="media-body">
+      <h3 class="media-heading">Build more Windfarms</h3>
+        <form>
+          <input type="number" name="amountInput" min="0" max="100" value="0" oninput="this.form.amountRange.value=this.value" /> 
+          <p class="unit">GWh</p>
+          <input type="range" name="amountRange" min="0" max="100" value="0" oninput="this.form.amountInput.value=this.value" />
+        </form>
+        <p class="description">Capacity of Wind Farms in NZ</p>
+    </div>
+  </div>
+
+  <div class="col-md-6 media">
+    <div class="media-left">
+      <i class="fa fa-bus"></i>
+    </div>
+    <div class="media-body">
+      <h3 class="media-heading">Take the Bus</h3>
+        <form>
+          <input type="number" name="amountInput" min="0" max="100" value="0" oninput="this.form.amountRange.value=this.value" /> 
+          <p class="unit">%</p>
+          <input type="range" name="amountRange" min="0" max="100" value="0" oninput="this.form.amountInput.value=this.value" />
+        </form>
+        <p class="description">People who commute by Bus</p>
+    </div>
+  </div>
+
+  <div class="col-md-6 media">
+    <div class="media-left">
+      <i class="fa fa-bicycle"></i>
+    </div>
+    <div class="media-body">
+      <h3 class="media-heading">Get on ya Bike</h3>
+        <form>
+          <input type="number" name="amountInput" min="0" max="100" value="0" oninput="this.form.amountRange.value=this.value" /> 
+          <p class="unit">%</p>
+          <input type="range" name="amountRange" min="0" max="100" value="0" oninput="this.form.amountInput.value=this.value" />
+        </form>
+        <p class="description">People who commute by Bicycle</p>
+    </div>
+  </div>
+
+</div>
+
   </body>
 </html>

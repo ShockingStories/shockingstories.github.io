@@ -1,1 +1,56 @@
 /* Other project styles */
+
+
+.metrics {
+    text-align: center;
+    width: 100%;
+}
+.metrics i {
+    margin-bottom: 10px;
+}
+
+h3 {
+    margin: 0;
+    }
+
+i.fa {
+    font-size: 7rem;
+    vertical-align: middle;
+    }
+
+.decisions img {
+    height: 70px;
+    padding: 0 10px;
+    }
+
+.decisions i.fa {
+    width: 90px;
+    text-align: center;
+    }
+
+.decisions i,
+.decisions form,
+.decisions form input,
+.decisions form p.unit {
+    float: left;
+}
+
+.decisions form {
+    width: 100%
+    }
+
+.decisions form input[type=number] {
+    width: 45px;
+    }
+.decisions form .unit {
+    width: 50px;
+    text-align: center;
+    margin: 0 5px;
+    }
+.decisions form input[type=range] {
+    width: 250px;
+    }
+
+.decisions p.description {
+    clear: both;
+}
