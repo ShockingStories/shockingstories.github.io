@@ -8,31 +8,154 @@
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.js"></script>
     <script type="text/javascript" src="/js/all.js"></script>
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.js">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" type="text/css" href="">
     <link rel="stylesheet" type="text/css" href="css/layout.css">
   </head>
 
   <body>
   <div class="container">
-    <div id="gwh"></div>
-    <div id="co2"></div>
-    <div id="cost"></div>
-    <div id="investment"></div>
-    <div id="car-slider">
-      <input type="range" min="0" value="0" max="100" step="10" list="ticks">
-      <datalist id="ticks">
-        <option>0</option>
-        <option>10</option>
-        <option>20</option>
-        <option>30</option>
-        <option>40</option>
-        <option>50</option>
-        <option>60</option>
-        <option>70</option>
-        <option>80</option>
-        <option>90</option>
-        <option>100</option>
-      </datalist>
+<h1>Shocking Stories</h1>
+<div class="row">
+  <div class="col-md-1">
+    <i class="fa fa-cloud"></i>
+    1000 Gt
+    CO2 Emissions
+  </div>
+  <div class="col-md-1">
+    <i class="fa fa-bolt"></i>
+    1000 GWh
+    
+    
+  </div>
+  <div class="col-md-1">
+    <i class="fa fa-dollar"></i>
+    $100 million / Year
+    Cost
+  </div>
+  <div class="col-md-1">
+    <i class="fa fa-university"></i>
+    $100 billion
+    Investment 
+  </div>
+</div>
+
+
+
+<h2>What can I do?</h2>
+
+<div class="row decisions">
+
+  <div class="col-md-6 media">
+    <div class="media-left">
+      <i class="fa fa-car"></i>
+    </div>
+    <div class="media-body">
+      <h3 class="media-heading">Buy an Electric Car</h3>
+        <form>
+          <input type="number" name="amountInput" min="0" max="100" value="0" oninput="this.form.amountRange.value=this.value" /> 
+          <p class="unit"> %</p>
+          <input type="range" name="amountRange" min="0" max="100" value="0" oninput="this.form.amountInput.value=this.value" />
+        </form>
+        <p class="description">Of NZ's cars are electric</p>
     </div>
   </div>
+
+  <div class="col-md-6 media">
+    <div class="media-left">
+      <i class="fa fa-sun-o"></i>
+    </div>
+    <div class="media-body">
+      <h3 class="media-heading">Install Solar Panels</h3>
+        <form>
+          <input type="number" name="amountInput" min="0" max="100" value="0" oninput="this.form.amountRange.value=this.value" /> 
+          <p class="unit"> Homes</p>
+          <input type="range" name="amountRange" min="0" max="100" value="0" oninput="this.form.amountInput.value=this.value" />
+        </form>
+        <p class="description">in NZ have Solar Panels</p>
+    </div>
+  </div>
+
+  <div class="col-md-6 media">
+    <div class="media-left">
+      <i class="fa fa-home"></i>
+    </div>
+    <div class="media-body">
+      <h3 class="media-heading">Insulate you house</h3>
+        <form>
+          <input type="number" name="amountInput" min="0" max="100" value="0" oninput="this.form.amountRange.value=this.value" /> 
+          <p class="unit"> %</p>
+          <input type="range" name="amountRange" min="0" max="100" value="0" oninput="this.form.amountInput.value=this.value" />
+        </form>
+        <p class="description">Homes in NZ are insulated</p>
+    </div>
+  </div>
+
+
+  <div class="col-md-6 media">
+    <div class="media-left">
+      <i class="fa fa-power-off"></i>
+    </div>
+    <div class="media-body">
+      <h3 class="media-heading">Turn off that light</h3>
+        <form>
+          <input type="number" name="amountInput" min="0" max="100" value="0" oninput="this.form.amountRange.value=this.value" /> 
+          <p class="unit"> Minutes</p>
+          <input type="range" name="amountRange" min="0" max="100" value="0" oninput="this.form.amountInput.value=this.value" />
+        </form>
+        <p class="description">Average light usage per person in NZ</p>
+    </div>
+  </div>
+
+  <div class="col-md-6 media">
+    <div class="media-left">
+      <img src=windmill.png height="70px">
+    </div>
+    <div class="media-body">
+      <h3 class="media-heading">Build more Windfarms</h3>
+        <form>
+          <input type="number" name="amountInput" min="0" max="100" value="0" oninput="this.form.amountRange.value=this.value" /> 
+          <p class="unit"> GWh</p>
+          <input type="range" name="amountRange" min="0" max="100" value="0" oninput="this.form.amountInput.value=this.value" />
+        </form>
+        <p class="description">Capacity of Wind Farms in NZ</p>
+    </div>
+  </div>
+
+  <div class="col-md-6 media">
+    <div class="media-left">
+      <i class="fa fa-bicycle"></i>
+    </div>
+    <div class="media-body">
+      <h3 class="media-heading">Take the Bus</h3>
+        <form>
+          <input type="number" name="amountInput" min="0" max="100" value="0" oninput="this.form.amountRange.value=this.value" /> 
+          <p class="unit"> %</p>
+          <input type="range" name="amountRange" min="0" max="100" value="0" oninput="this.form.amountInput.value=this.value" />
+        </form>
+        <p class="description">People who commute by Bus</p>
+    </div>
+  </div>
+
+  <div class="col-md-6 media">
+    <div class="media-left">
+      <i class="fa fa-bicycle"></i>
+    </div>
+    <div class="media-body">
+      <h3 class="media-heading">Get on ya Bike</h3>
+        <form>
+          <input type="number" name="amountInput" min="0" max="100" value="0" oninput="this.form.amountRange.value=this.value" /> 
+          <p class="unit"> GWh</p>
+          <input type="range" name="amountRange" min="0" max="100" value="0" oninput="this.form.amountInput.value=this.value" />
+        </form>
+        <p class="description">People who commute by Bicycle</p>
+    </div>
+  </div>
+
+</div>
+
   </body>
 </html>

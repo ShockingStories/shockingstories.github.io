@@ -1,0 +1,35 @@
+/* Other project styles */
+
+.decisions i {
+    font-size: 7rem;
+    margin: 7px 10px 0 0;
+    }
+
+.decisions i,
+.decisions form,
+.decisions form input,
+.decisions form p.unit {
+    float: left;
+}
+
+.decisions form {
+    width: 100%
+    }
+
+.decisions form h2 {
+    margin-top: 0;
+    }
+.decisions form input[type=number] {
+    width: 45px;
+    }
+.decisions form .unit {
+    width: 20px;
+    text-align: center;
+    }
+.decisions form input[type=range] {
+    width: 300px;
+    }
+
+.decisions p.description {
+    clear: both;
+}
