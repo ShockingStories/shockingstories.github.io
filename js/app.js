@@ -22,7 +22,6 @@ function updateCars (value) {
   //updateGraph('gwh-chart', mockAdjustGWh()); 
 
   var data = shockingUpdate({'electric_cars': value});
-  console.log(" ---- ", value, " : ", data.gen_production);
 
   updateGraph('gwh-chart', data.gen_production);
   updateGraph('co2-chart', {
