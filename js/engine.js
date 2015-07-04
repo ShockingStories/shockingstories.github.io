@@ -1,11 +1,15 @@
-//
-var input_test = {
+// reference: https://docs.google.com/spreadsheets/d/1rjZZg19gH4ST3XFfPaUmvgC90ACKgRw8x-MgoozkLfI/edit#gid=0
+
+var input_example = {
 	// % of electric cars
-	'electric_cars': 1
+	'electric_cars': 2
 }
 
 
 function shockingUpdate(inputs) {
+
+	console.log("shockingUpdate - Inputs: " + JSON.stringify(inputs));
+
 
 	// ********************************************
 	// Baseline data 
@@ -37,9 +41,44 @@ function shockingUpdate(inputs) {
 	// ********************************************
 	// Business logic
 	// ********************************************
+	
+	// [1] Electric cars
+	// ASSUMPTION: there are essentially 0 electric cars in the current fleet
+	var electric_cars = inputs['electric_cars'];
+	var electric_pct = electric_cars/100;
 
-	// TODO
+	fleet_emissions['Road'] = fleet_emissions['Road'] * (1-electric_pct);
 
+	// ASSUMPTION: any uptick in power generation required to meet
+	// electric car demand, will be met proportionally by all generation sources
+	// ASSUMPTION: typical EV will use 0.2 kWh for 1 km travelled
+	// average travel is 12032 km per year
+	// fleet size is 3341013
+	ev_power_reqts = 12032 * 0.2 * 3341013 * electric_pct;
+	
+	// convert kwh to gwh
+	ev_power_reqts = ev_power_reqts / 1000000;
+
+	// work out total current generation
+	var total_gen = 0;
+	for (var key in gen_production) {
+		total_gen += gen_production[key];
+	}
+
+	var increase_in_power_reqts = 1 + (ev_power_reqts / total_gen);
+	console.log('total: ' + total_gen);
+	console.log('increase from electric vehicles: ' + increase_in_power_reqts);
+
+	console.log('ev_power_reqts ' + ev_power_reqts);
+
+	// now apply that factor to the emissions - emissions from EV power requirements
+	for (var key in gen_emissions) {
+		gen_emissions[key] = gen_emissions[key] * increase_in_power_reqts;
+	}
+
+	// ********************************************
+	// Output
+	// ********************************************
 	var result = {
 		'gen_production': gen_production,
 		'gen_emissions': gen_emissions,
