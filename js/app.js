@@ -1,39 +1,29 @@
 document.addEventListener("DOMContentLoaded", function(event) {
-  columnGraph("#gwh", [
-    1, 20, 30, 40, 60, 100
+  columnGraph("#co2-chart", [
+    1, 10, 20, 20, 25, 50
   ]);
-  //columnGraph("#co2", [
-    //1, 20, 40, 40, 50, 100
-  //]);
-  //columnGraph("#cost", [
-    //1, 20, 30, 30, 70, 100
-  //]);
-  //columnGraph("#investment", [
-    //1, 10, 20, 30, 90, 100
-  //]);
-
-  //d3.select('#car-slider').call(
-    //d3.slider()
-      //.axis(true)
-      //.min(0)
-      //.max(100)
-      //.on("slide", function(evt, value) {
-      //d3.select('#slider-text').text(value);
-    //})
-  //);
+  columnGraph("#gwh-chart", [
+    1, 10, 15, 20, 30, 50
+  ]);
+  columnGraph("#cost-chart", [
+    1, 10, 15, 15, 35, 50
+  ]);
+  columnGraph("#investment-chart", [
+    1, 5, 10, 15, 45, 50
+  ]);
 });
 
 // Hacky, fix me!
 function columnGraph (bindTo, values) {
-  var w = 200;
-  var h = 400;
+  var w = 80;
+  var h = 300;
 
   var svg = d3.select(bindTo).append("svg:svg")
     .attr("class", "chart")
     .attr("width", w)
     .attr("height", h )
     .append("svg:g")
-    .attr("transform", "translate(50,400)");
+    .attr("transform", "translate(0,300)");
 
   var matrix = [values];
 
@@ -43,8 +33,8 @@ function columnGraph (bindTo, values) {
     colors.push('rgb(' + randomRGB() + ',' + randomRGB() + ',' + randomRGB() + ')');
   }
 
-  x = d3.scale.ordinal().rangeRoundBands([0, w-50]);
-  y = d3.scale.linear().range([0, h-50]);
+  x = d3.scale.ordinal().rangeRoundBands([0, w]);
+  y = d3.scale.linear().range([0, h]);
   z = d3.scale.ordinal().range(colors);
 
   var remapped =["c1","c2","c3","c4","c5"].map(function(dat,i){
