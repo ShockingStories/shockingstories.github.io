@@ -93,7 +93,7 @@ function shockingUpdate(inputs) {
 	// ----------
 	// [3] Wind
 	// ----------
-	var new_wind = inputs['windNumber'];
+	var new_wind = inputs['windfarmNumber'];
 	
 	// Based on: Each new wind farm is 200W; 702 GWh per annum;
 	// capital cost of $521,344,918
