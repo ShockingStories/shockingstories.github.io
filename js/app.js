@@ -1,5 +1,6 @@
 var totals = {
-  'gwh-total': 50000 // Start with higher than expected value, leaving room
+  'gwh-total': 50000, // Start with higher than expected value, leaving room
+  'cost-total': 550
 };
 
 document.addEventListener("DOMContentLoaded", function(event) {
