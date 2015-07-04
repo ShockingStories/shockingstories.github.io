@@ -60,7 +60,6 @@ function shockingUpdate(inputs) {
 	var decrease_due_to_solar = solar_production / total_gen;
 	increase_in_power_reqts -= decrease_due_to_solar;
 
-
 	// ----------
 	// [3] Wind
 	// ----------
@@ -135,7 +134,8 @@ function getBaseline() {
 		'Geothermal': 6487,
 		'Wind': 2187,
 		'Coal': 1832,
-		'Gas': 6626
+		'Gas': 6626,
+    'Solar': 0
 	}
 
 	// annual generation emissions in Kilotons of CO2 Equivalent

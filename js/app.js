@@ -1,7 +1,7 @@
 var totals = {};
 
 document.addEventListener("DOMContentLoaded", function(event) {
-  updateCars(0);
+  updateCharts('car', 0);
   columnGraph("#cost-chart", [
     1, 10, 15, 15, 35, 50
   ]);
@@ -21,9 +21,9 @@ function getRangeValues () {
   };
 }
 
-function updateCars (value) {
-  document.getElementById('carNumber').value = value;
-  document.getElementById('carRange').value = value;
+function updateCharts (prefix, value) {
+  document.getElementById(prefix + 'Number').value = value;
+  document.getElementById(prefix + 'Range').value = value;
 
   var data = shockingUpdate(getRangeValues());
 

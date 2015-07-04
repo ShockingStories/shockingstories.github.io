@@ -36,11 +36,48 @@ function updateTotal(totalId, data) {
   return total;
 }
 
+function assignColors(prefix, delta) {
+  var colors = [];
+
+  switch (prefix) {
+    case 'co2':
+      colors.push('#ff9900'); // Geothermal
+      colors.push('#999999'); // Coal
+      colors.push('#f3f3f3'); // Gas
+      colors.push('#34495e'); // Road
+      break;
+
+    case 'gwh':
+      // Order matters, sadly
+      colors.push('#6d9eeb'); // Hydro
+      colors.push('#ff9900'); // Geothermal
+      colors.push('#c9daf8'); // Wind
+      colors.push('#999999'); // Coal
+      colors.push('#f3f3f3'); // Gas
+      colors.push('#ffd966'); // Solar
+      break;
+
+    case 'cost':
+      break;
+
+    case 'investment':
+      break;
+  }
+
+  // Padding colour
+  if (delta > 0) {
+    colors.push('none');
+  }
+
+  return colors;
+}
+
 function updateGraph (bindTo, data) {
   var w = 80;
   var h = 300;
 
-  var totalId = bindTo.split('-')[0] + '-total';
+  var prefix = bindTo.split('-')[0];
+  var totalId = prefix + '-total';
   var newTotal = updateTotal(totalId, data);
 
   // Store as global for the life of the document
@@ -66,17 +103,7 @@ function updateGraph (bindTo, data) {
   // If difference between totals is positive, an additional array element
   // will be added to pad the chart as the total shrinks
   var matrix = [preprocessData(data, delta)];
-
-  // Random for now
-  var colors = [];
-  for (var i = 0; i < matrix[0].length -1; i++) {
-    colors.push('rgb(' + randomRGB() + ',' + randomRGB() + ',' + randomRGB() + ')');
-  }
-
-  // Padding colour
-  if (delta > 0) {
-    colors[matrix[0].length-2] = 'none';
-  }
+  var colors = assignColors(prefix, delta);
 
   x = d3.scale.ordinal().rangeRoundBands([0, w]);
   y = d3.scale.linear().range([0, h]);
