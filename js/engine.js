@@ -129,14 +129,13 @@ function getBaseline() {
 		'Gas': 3405.51
 	}
 
-	// annual generation costs in ...?
-	// TODO: waiting for the actual numbers
+	// annual generation costs in $NZ per year (I think)
 	var gen_cost = {
-		'Hydro': 100,
-		'Geothermal': 150,
-		'Wind': 200,
-		'Coal': 250,
-		'Gas': 300
+		'Hydro': 53872180,
+		'Geothermal': 59535000,
+		'Wind': 43484000,
+		'Coal': 34177200,
+		'Gas': 161044192
 	}
 
 	var result = {
