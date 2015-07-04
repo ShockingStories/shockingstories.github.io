@@ -1,5 +1,18 @@
 /* Other project styles */
 
+
+.metrics {
+    text-align: center;
+    width: 100%;
+}
+.metrics i {
+    margin-bottom: 10px;
+}
+
+h3 {
+    margin: 0;
+    }
+
 i.fa {
     font-size: 7rem;
     vertical-align: middle;
@@ -26,9 +39,6 @@ i.fa {
     width: 100%
     }
 
-.decisions form h2 {
-    margin-top: 0;
-    }
 .decisions form input[type=number] {
     width: 45px;
     }
@@ -38,7 +48,7 @@ i.fa {
     margin: 0 5px;
     }
 .decisions form input[type=range] {
-    width: 300px;
+    width: 250px;
     }
 
 .decisions p.description {
