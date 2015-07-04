@@ -2,15 +2,25 @@ document.addEventListener("DOMContentLoaded", function(event) {
   columnGraph("#gwh", [
     1, 20, 30, 40, 60, 100
   ]);
-  columnGraph("#co2", [
-    1, 20, 40, 40, 50, 100
-  ]);
-  columnGraph("#cost", [
-    1, 20, 30, 30, 70, 100
-  ]);
-  columnGraph("#investment", [
-    1, 10, 20, 30, 90, 100
-  ]);
+  //columnGraph("#co2", [
+    //1, 20, 40, 40, 50, 100
+  //]);
+  //columnGraph("#cost", [
+    //1, 20, 30, 30, 70, 100
+  //]);
+  //columnGraph("#investment", [
+    //1, 10, 20, 30, 90, 100
+  //]);
+
+  //d3.select('#car-slider').call(
+    //d3.slider()
+      //.axis(true)
+      //.min(0)
+      //.max(100)
+      //.on("slide", function(evt, value) {
+      //d3.select('#slider-text').text(value);
+    //})
+  //);
 });
 
 // Hacky, fix me!
