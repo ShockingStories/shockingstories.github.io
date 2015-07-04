@@ -48,7 +48,26 @@ function columnGraph (bindTo, values) {
     .attr("width", Math.min.apply(null, [x.rangeBand()-2, 100]));
 }
 
-function updateGraph (bindTo, values) {
+function preprocessData (data) {
+  // Horrible kludge to get things working for proof of concept...
+  var values = [1];
+  var total = 0;
+  for (var k in data) {
+    if(data.hasOwnProperty(k)){
+      total += data[k];
+      values.push(data[k]);
+    }
+  }
+
+  // Need percent values for chart
+  for (var i = 1; i < values.length; i++) {
+    values[i] = Math.round((values[i] / total) * 100);
+  }
+
+  return values;
+}
+
+function updateGraph (bindTo, data) {
   var w = 80;
   var h = 300;
 
@@ -57,9 +76,9 @@ function updateGraph (bindTo, values) {
     .attr("width", w)
     .attr("height", h )
     .append("svg:g")
-    .attr("transform", "translate(0,300)");
+    .attr("transform", "translate(0," + h + ")");
 
-  var matrix = [values];
+  var matrix = [preprocessData(data)];
 
   // Random for now
   var colors = [];
@@ -71,7 +90,7 @@ function updateGraph (bindTo, values) {
   y = d3.scale.linear().range([0, h]);
   z = d3.scale.ordinal().range(colors);
 
-  var remapped =["c1","c2","c3","c4","c5"].map(function(dat,i){
+  var remapped = ["c1","c2","c3","c4","c5"].map(function(dat,i){
     return matrix.map(function(d,ii){
       return {x: ii, y: d[i+1] };
     })
