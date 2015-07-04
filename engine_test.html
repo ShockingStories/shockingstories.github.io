@@ -14,11 +14,17 @@
 
 <input type="text" id="ev_factor" value="1"/> Electric %<br/><br/>
 <input type="text" id="solar_factor" value="100000"/> Solar Houses<br/><br/>
+<input type="text" id="wind_factor" value="5"/>New Wind Farms<br/><br/>
 
 <button onclick="
 		ev_factor=document.getElementById('ev_factor').value;
 		solar_factor=document.getElementById('solar_factor').value;
-		shockingUpdate({'electric_cars':ev_factor,'solar_houses': solar_factor})">Calculate</button> and check console
+		new_wind=document.getElementById('wind_factor').value;
+		shockingUpdate({
+			'carNumber':ev_factor,
+			'solarNumber': solar_factor,
+			'windNumber': new_wind
+		})">Calculate</button> and check console
 
   </body>
 </html>
