@@ -67,14 +67,25 @@ function preprocessData (data) {
   return values;
 }
 
+function updateTotal(prefix, data) {
+  var total = 0;
+  for (var k in data) {
+    if(data.hasOwnProperty(k)){
+      total += data[k];
+    }
+  }
+  document.getElementById(prefix + '-total').innerHTML = Math.round(total);
+}
+
 function updateGraph (bindTo, data) {
   var w = 80;
   var h = 300;
 
+  updateTotal(bindTo.split('-')[0], data);
+
   // Hacky: remove chart if it exists
   // TODO: transition!
   var element = document.getElementById(bindTo);
-  console.log(element);
   while (element.firstChild) {
     element.removeChild(element.firstChild);
   }
