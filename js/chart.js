@@ -102,7 +102,7 @@ function updateGraph (bindTo, data) {
     .data(stacked)
     .enter().append("svg:g")
     .attr("class", "valgroup")
-    .style("fill", function(d, i) { return z(i); })
+    .style("fill", function(d, i) { return z(i); console.log(z(i));})
     .style("stroke", function(d, i) { return d3.rgb(z(i)).darker(); });
 
   var rect = valgroup.selectAll("rect")

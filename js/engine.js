@@ -3,8 +3,6 @@
 
 function shockingUpdate(inputs) {
 
-	console.log("shockingUpdate - Inputs: " + JSON.stringify(inputs));
-
 	var baseline         = getBaseline();
 	var gen_production   = baseline['gen_production'];
 	var gen_emissions    = baseline['gen_emissions'];
@@ -47,10 +45,6 @@ function shockingUpdate(inputs) {
 	}
 
 	var increase_in_power_reqts = 1 + (ev_power_reqts / total_gen);
-	console.log('total: ' + total_gen);
-	console.log('increase from electric vehicles: ' + increase_in_power_reqts);
-
-	console.log('ev_power_reqts ' + ev_power_reqts);
 
 	// -----------------
 	// [2] Solar Houses
@@ -62,8 +56,6 @@ function shockingUpdate(inputs) {
 	// convert to Gwh
 	solar_production = solar_production / 1000000;
 
-	console.log('solar production: ' + solar_production);
-	
 	// reduce proportionally all the other production and emissions
 	var decrease_due_to_solar = solar_production / total_gen;
 	increase_in_power_reqts -= decrease_due_to_solar;
@@ -126,8 +118,6 @@ function shockingUpdate(inputs) {
 		'gen_capital_cost': gen_capital_cost,
 		'fleet_emissions': fleet_emissions
 	}
-
-	console.log("Result: " + JSON.stringify(result));
 
 	return result;
 }

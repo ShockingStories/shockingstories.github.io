@@ -16,9 +16,7 @@ function getRangeValues () {
     'carNumber': document.getElementById('carNumber').value,
     'solarNumber': document.getElementById('solarNumber').value,
     'homeNumber': document.getElementById('homeNumber').value,
-    'powerOffNumber': document.getElementById('powerOffNumber').value,
     'windfarmNumber': document.getElementById('windfarmNumber').value,
-    'busNumber': document.getElementById('busNumber').value,
     'bicycleNumber': document.getElementById('bicycleNumber').value
   };
 }
