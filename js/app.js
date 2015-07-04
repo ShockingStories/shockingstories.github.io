@@ -23,4 +23,3 @@ function updateCars (value) {
     'Road': data.fleet_emissions['Road']
   });
 }
-
