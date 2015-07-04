@@ -7,8 +7,6 @@ var uglify = require('gulp-uglify');
 gulp.task('js', function () {
   return gulp.src([
       '!js/all.js',
-      'js/lib/jquery.min.js',
-      'js/lib/bootstrap.min.js',
       'js/lib/d3.min.js',
       'js/src/*.js'
     ])
