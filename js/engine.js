@@ -5,36 +5,10 @@ function shockingUpdate(inputs) {
 
 	console.log("shockingUpdate - Inputs: " + JSON.stringify(inputs));
 
-	//var baseline = getBaseline();
-
-	// annual generation in Gigawatt Hours
-	var gen_production = {
-		'Hydro': 24095,
-		'Geothermal': 6487,
-		'Wind': 2187,
-		'Coal': 1832,
-		'Gas': 6626
-	}
-
-	// annual generation emissions in Kilotons of CO2 Equivalent
-	var gen_emissions = {
-		'Hydro': 0,
-		'Geothermal': 847.32,
-		'Wind': 0,
-		'Coal': 1222.2,
-		'Gas': 3405.51
-	}
-
-	// annual generation costs in ...?
-	// TODO: waiting for the actual numbers
-	var gen_cost = {
-		'Hydro': 100,
-		'Geothermal': 150,
-		'Wind': 200,
-		'Coal': 250,
-		'Gas': 300
-	}
-
+	var baseline = getBaseline();
+	var gen_production = baseline['gen_production'];
+	var gen_emissions  = baseline['gen_emissions'];
+	var gen_cost       = baseline['gen_cost'];
 
 	// annual vehicle fleet emissions in Kilotons of CO2 Equivalent
 	var fleet_emissions = {
@@ -45,7 +19,10 @@ function shockingUpdate(inputs) {
 	// Business logic
 	// ********************************************
 	
+	// -----------------
 	// [1] Electric cars
+	// -----------------
+
 	// ASSUMPTION: there are essentially 0 electric cars in the current fleet
 	var electric_cars = inputs['electric_cars'];
 	var electric_pct = electric_cars/100;
@@ -74,6 +51,22 @@ function shockingUpdate(inputs) {
 
 	console.log('ev_power_reqts ' + ev_power_reqts);
 
+	// -----------------
+	// [2] Solar Houses
+	// -----------------
+	var solar_houses = inputs['solar_houses'];
+
+	// ASSUMPTION - each household generates 5260 KWh per year
+	var solar_production = inputs['solar_houses'] * 5260;
+	// convert to Gwh
+	solar_production = solar_production / 1000000;
+
+	console.log('solar production: ' + solar_production);
+	
+	// reduce proportionally all the other production and emissions
+	var decrease_due_to_solar = solar_production / total_gen;
+	increase_in_power_reqts -= decrease_due_to_solar;
+	
 	for (var key in gen_emissions) {
 		gen_emissions[key] = gen_emissions[key] * increase_in_power_reqts;
 	}
@@ -82,6 +75,9 @@ function shockingUpdate(inputs) {
 	for (var key in gen_production) {
 		gen_production[key] = gen_production[key] * increase_in_power_reqts;
 	}
+
+	// now add in the solar
+	gen_production['Solar'] = solar_production;
 
 	// now apply that factor to the emissions - emissions from EV power requirements
 	for (var key in gen_emissions) {
