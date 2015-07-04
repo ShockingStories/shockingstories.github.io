@@ -1,5 +1,6 @@
+// Get things working for proof of concept:
+// convert data object to array
 function preprocessData (data, delta) {
-  // Horrible kludge to get things working for proof of concept...
   var values = [1];
   var total = 0;
   for (var k in data) {
@@ -74,7 +75,7 @@ function updateGraph (bindTo, data) {
 
   // Padding colour
   if (delta > 0) {
-    colors[matrix[0].length-1] = 'rgb(255,255,255)';
+    colors[matrix[0].length-2] = 'none';
   }
 
   x = d3.scale.ordinal().rangeRoundBands([0, w]);
@@ -102,8 +103,13 @@ function updateGraph (bindTo, data) {
     .data(stacked)
     .enter().append("svg:g")
     .attr("class", "valgroup")
-    .style("fill", function(d, i) { return z(i); console.log(z(i));})
-    .style("stroke", function(d, i) { return d3.rgb(z(i)).darker(); });
+    .style("fill", function(d, i) { return z(i); })
+    .style("stroke", function(d, i) { 
+      if (z(i) !== 'none') {
+        return d3.rgb(z(i)).darker();
+      }
+      return 'none';
+    });
 
   var rect = valgroup.selectAll("rect")
     .data(function(d){return d;})
