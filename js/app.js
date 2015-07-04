@@ -10,12 +10,24 @@ document.addEventListener("DOMContentLoaded", function(event) {
   ]);
 });
 
+// Each slider's value, to pass to calculator
+function getRangeValues () {
+  return {
+    'carNumber': document.getElementById('carNumber').value,
+    'solarNumber': document.getElementById('solarNumber').value,
+    'homeNumber': document.getElementById('homeNumber').value,
+    'powerOffNumber': document.getElementById('powerOffNumber').value,
+    'windfarmNumber': document.getElementById('windfarmNumber').value,
+    'busNumber': document.getElementById('busNumber').value,
+    'bicycleNumber': document.getElementById('bicycleNumber').value
+  };
+}
 
 function updateCars (value) {
   document.getElementById('carNumber').value = value;
   document.getElementById('carRange').value = value;
 
-  var data = shockingUpdate({'electric_cars': value});
+  var data = shockingUpdate(getRangeValues());
 
   console.log("Data from shockingUpdate: ", data);
   updateGraph('gwh-chart', data.gen_production);

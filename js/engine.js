@@ -24,8 +24,8 @@ function shockingUpdate(inputs) {
 	// -----------------
 
 	// ASSUMPTION: there are essentially 0 electric cars in the current fleet
-	var electric_cars = inputs['electric_cars'];
-	var electric_pct = electric_cars/100;
+	var carNumber = inputs['carNumber'];
+	var electric_pct = carNumber/100;
 
 	fleet_emissions['Road'] = fleet_emissions['Road'] * (1-electric_pct);
 
@@ -54,10 +54,10 @@ function shockingUpdate(inputs) {
 	// -----------------
 	// [2] Solar Houses
 	// -----------------
-	var solar_houses = inputs['solar_houses'];
+	var solarNumber = inputs['solarNumber'];
 
 	// ASSUMPTION - each household generates 5260 KWh per year
-	var solar_production = inputs['solar_houses'] * 5260;
+	var solar_production = inputs['solarNumber'] * 5260;
 	// convert to Gwh
 	solar_production = solar_production / 1000000;
 
