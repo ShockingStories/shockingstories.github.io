@@ -119,6 +119,7 @@ function updateGraph (bindTo, data) {
   for (var i = 1; i < matrix[0].length; i++) {
     a.push("c" + i);
   }
+
   //var remapped = ["c1","c2","c3","c4","c5"].map(function(dat,i){
   var remapped = a.map(function(dat,i){
     return matrix.map(function(d,ii){
