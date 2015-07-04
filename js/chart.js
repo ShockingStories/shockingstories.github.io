@@ -9,7 +9,7 @@ function preprocessData (data, delta) {
     }
   }
 
-  // delta represents change in total value
+  // delta represents difference from original total value
   if (delta > 0) {
     values.push(delta);
   }
@@ -30,7 +30,6 @@ function updateTotal(totalId, data) {
     }
   }
   total = Math.round(total);
-  console.log("Updated total: ", total);
   document.getElementById(totalId).innerHTML = total;
 
   return total;
@@ -40,15 +39,12 @@ function updateGraph (bindTo, data) {
   var w = 80;
   var h = 300;
 
-  console.log("Data passed in: ", data);
   var totalId = bindTo.split('-')[0] + '-total';
   var newTotal = updateTotal(totalId, data);
 
   // Store as global for the life of the document
   if (!totals[totalId]) {
-    console.log("Element: ",totalId, document.getElementById(totalId).innerHTML);
     totals[totalId] = parseInt(document.getElementById(totalId).innerHTML, 10);
-    console.log("TOTALS: ", totals);
   }
   var delta = totals[totalId] - newTotal;
 
@@ -68,18 +64,17 @@ function updateGraph (bindTo, data) {
 
   // If difference between totals is positive, an additional array element
   // will be added to pad the chart as the total shrinks
-  console.log("DELTA: ", delta);
   var matrix = [preprocessData(data, delta)];
 
   // Random for now
   var colors = [];
   for (var i = 0; i < matrix[0].length -1; i++) {
     colors.push('rgb(' + randomRGB() + ',' + randomRGB() + ',' + randomRGB() + ')');
+  }
 
-    // Padding colour
-    if (delta > 0) {
-      colors[matrix[0].length-1] = "rgb(255,255,255)";
-    }
+  // Padding colour
+  if (delta > 0) {
+    colors[matrix[0].length-1] = 'rgb(255,255,255)';
   }
 
   x = d3.scale.ordinal().rangeRoundBands([0, w]);

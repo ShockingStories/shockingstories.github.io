@@ -29,7 +29,6 @@ function updateCars (value) {
 
   var data = shockingUpdate(getRangeValues());
 
-  console.log("Data from shockingUpdate: ", data);
   updateGraph('gwh-chart', data.gen_production);
   updateGraph('co2-chart', {
     'Geothermal': data.gen_emissions['Geothermal'],
