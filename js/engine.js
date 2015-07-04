@@ -89,7 +89,7 @@ function shockingUpdate(inputs) {
 		}
 	}
 
-	
+
 	// ----------
 	// [3] Wind
 	// ----------
