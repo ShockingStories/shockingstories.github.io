@@ -27,7 +27,7 @@ function columnGraph (bindTo, values) {
     })
   });
 
-  var stacked = d3.layout.stack()(remapped)
+  var stacked = d3.layout.stack()(remapped);
 
   x.domain(stacked[0].map(function(d) { return d.x; }));
   y.domain([0, d3.max(stacked[stacked.length - 1], function(d) { return d.y0 + d.y; })]);
@@ -71,7 +71,15 @@ function updateGraph (bindTo, data) {
   var w = 80;
   var h = 300;
 
-  var svg = d3.select(bindTo).append("svg:svg")
+  // Hacky: remove chart if it exists
+  // TODO: transition!
+  var element = document.getElementById(bindTo);
+  console.log(element);
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
+  }
+
+  var svg = d3.select('#' + bindTo).append("svg:svg")
     .attr("class", "chart")
     .attr("width", w)
     .attr("height", h )

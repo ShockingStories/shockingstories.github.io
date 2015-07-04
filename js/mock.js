@@ -10,11 +10,11 @@ function mockGWh () {
 
 function mockAdjustGWh () {
   return {
-		'Hydro': 24095,
-		'Geothermal': 6487,
-		'Wind': 2187,
-		'Coal': 1832,
-		'Gas': 6626
+		'Hydro': 24,
+		'Geothermal': 648,
+		'Wind': 1218,
+		'Coal': 832,
+		'Gas': 362
 	};
 }
 

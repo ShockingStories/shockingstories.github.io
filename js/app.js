@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   columnGraph("#co2-chart", [
     1, 10, 20, 20, 25, 50
   ]);
-  updateGraph('#gwh-chart', mockGWh());
+  updateGraph('gwh-chart', mockGWh());
   //columnGraph("#gwh-chart", [
     //1, 10, 15, 20, 30, 50
   //]);
@@ -18,6 +18,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 function updateCars (value) {
   document.getElementById('carNumber').value = value;
   document.getElementById('carRange').value = value;
-  updateGraph('#gwh-chart', mockAdjustGWh()); 
+  updateGraph('gwh-chart', mockAdjustGWh()); 
 }
 
