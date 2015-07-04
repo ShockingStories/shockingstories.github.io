@@ -1,10 +1,9 @@
-var totals = {};
+var totals = {
+  'gwh-total': 50000 // Start with higher than expected value, leaving room
+};
 
 document.addEventListener("DOMContentLoaded", function(event) {
   updateCharts('car', 0);
-  columnGraph("#cost-chart", [
-    1, 10, 15, 15, 35, 50
-  ]);
   columnGraph("#investment-chart", [
     1, 5, 10, 15, 45, 50
   ]);
@@ -34,4 +33,5 @@ function updateCharts (prefix, value) {
     'Gas': data.gen_emissions['Gas'],
     'Road': data.fleet_emissions['Road']
   });
+  updateGraph('cost-chart', data.gen_cost);
 }

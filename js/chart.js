@@ -41,6 +41,7 @@ function assignColors(prefix, delta) {
 
   switch (prefix) {
     case 'co2':
+      // Order matters, sadly
       colors.push('#ff9900'); // Geothermal
       colors.push('#999999'); // Coal
       colors.push('#f3f3f3'); // Gas
@@ -48,7 +49,6 @@ function assignColors(prefix, delta) {
       break;
 
     case 'gwh':
-      // Order matters, sadly
       colors.push('#6d9eeb'); // Hydro
       colors.push('#ff9900'); // Geothermal
       colors.push('#c9daf8'); // Wind
@@ -58,6 +58,11 @@ function assignColors(prefix, delta) {
       break;
 
     case 'cost':
+      colors.push('#6d9eeb'); // Hydro
+      colors.push('#ff9900'); // Geothermal
+      colors.push('#c9daf8'); // Wind
+      colors.push('#999999'); // Coal
+      colors.push('#f3f3f3'); // Gas
       break;
 
     case 'investment':
