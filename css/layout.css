@@ -1,8 +1,18 @@
 /* Other project styles */
 
-.decisions i {
+i.fa {
     font-size: 7rem;
-    margin: 7px 10px 0 0;
+    vertical-align: middle;
+    }
+
+.decisions img {
+    height: 70px;
+    padding: 0 10px;
+    }
+
+.decisions i.fa {
+    width: 90px;
+    text-align: center;
     }
 
 .decisions i,
@@ -23,8 +33,9 @@
     width: 45px;
     }
 .decisions form .unit {
-    width: 20px;
+    width: 50px;
     text-align: center;
+    margin: 0 5px;
     }
 .decisions form input[type=range] {
     width: 300px;
