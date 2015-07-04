@@ -106,6 +106,14 @@ function shockingUpdate(inputs) {
 		gen_cost[key] = gen_cost[key] * increase_in_power_reqts;
 	}
 
+	// ********************************************
+	// Data tidying
+	// ********************************************
+	
+	// convert cost from dollars to millions
+	for (var key in gen_cost) {
+		gen_cost[key] = gen_cost[key] / 1000000;
+	}
 
 	// ********************************************
 	// Output
@@ -117,6 +125,8 @@ function shockingUpdate(inputs) {
 		'gen_capital_cost': gen_capital_cost,
 		'fleet_emissions': fleet_emissions
 	}
+
+
 
 	return result;
 }
