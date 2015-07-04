@@ -3,11 +3,17 @@
 
 function shockingUpdate(inputs) {
 
+	// Debug flag
+	var debug = false;
+	if ('debug' in inputs) {
+		debug = true;
+	}
+
 	var baseline         = getBaseline();
 	var gen_production   = baseline['gen_production'];
 	var gen_emissions    = baseline['gen_emissions'];
 	var gen_cost         = baseline['gen_cost'];
-	var gen_capital_cost = {};
+	var gen_capital_cost = baseline['gen_capital_cost'];
 
 	// annual vehicle fleet emissions in Kilotons of CO2 Equivalent
 	var fleet_emissions = {
@@ -18,6 +24,18 @@ function shockingUpdate(inputs) {
 	// Business logic
 	// ********************************************
 	
+	// -----------------
+	// [0] Set up some arrays and data we'll need
+	// -----------------
+
+	// work out total current generation
+	var total_gen = 0;
+	for (var key in gen_production) {
+		total_gen += gen_production[key];
+	}
+
+	var generation_delta = {};
+
 	// -----------------
 	// [1] Electric cars
 	// -----------------
@@ -38,81 +56,115 @@ function shockingUpdate(inputs) {
 	// convert kwh to gwh
 	ev_power_reqts = ev_power_reqts / 1000000;
 
-	// work out total current generation
-	var total_gen = 0;
+	// increase generation accross the board to cope with the demand from vehicles
+	var increase_in_power_reqts = ev_power_reqts / total_gen;
 	for (var key in gen_production) {
-		total_gen += gen_production[key];
+		generation_delta[key] = gen_production[key] * increase_in_power_reqts;
 	}
-
-	var increase_in_power_reqts = 1 + (ev_power_reqts / total_gen);
 
 	// -----------------
 	// [2] Solar Houses
 	// -----------------
 	var solar_houses = inputs['solarNumber'];
 
+	// installation cost
+	gen_capital_cost['Solar'] = solar_houses * 12495;
+
 	// ASSUMPTION - each household generates 5260 KWh per year
 	var solar_production = solar_houses * 5260;
 	// convert to Gwh
 	solar_production = solar_production / 1000000;
+	generation_delta['Solar'] = solar_production;
 
-	// reduce proportionally all the other production and emissions
+	// reduce proportionally all the non-solar production
 	var decrease_due_to_solar = solar_production / total_gen;
-	increase_in_power_reqts -= decrease_due_to_solar;
+	for (var key in gen_production) {
+		if (gen_production[key] != 'Solar') {
+			var amount_to_reduce = gen_production[key] * decrease_due_to_solar;
+			if (key in generation_delta) {
+				generation_delta[key] -= amount_to_reduce;
+			} else {
+				generation_delta[key] = 0 - amount_to_reduce;
+			}
+		}
+	}
 
+	
 	// ----------
 	// [3] Wind
 	// ----------
-	////var new_wind = inputs['windNumber'];
+	var new_wind = inputs['windNumber'];
 	
 	// Based on: Each new wind farm is 200W; 702 GWh per annum;
 	// capital cost of $521,344,918
 	
 	// first the capital cost, that's easy:
-	////gen_capital_cost['Wind'] = new_wind * 521344918;
+	gen_capital_cost['Wind'] = new_wind * 521344918;
 
 	// new wind capacity
-	////var new_wind_capacity = new_wind * 702;
-	// new wind capacity gives us associated production, emissions, and running costs
+	generation_delta['Wind'] = new_wind * 702;
 
-	/*if (new_wind > 0) {
-		var new_wind_ratio = new_wind_capacity / gen_production['Wind'];
-	}
-
-	gen_production['Wind'] += new_wind_capacity; */
-
-	// TODO: finally reduce the other (hopefully less polluting) generation
-
-
-	// apply the factor to the production
+	// other production methods do proportionally less work
+	// due to the extra wind production
+	var decrease_due_to_wind = generation_delta['Wind'] / total_gen;
 	for (var key in gen_production) {
-		gen_production[key] = gen_production[key] * increase_in_power_reqts;
+		if (gen_production[key] != 'Wind') {
+			var amount_to_reduce = gen_production[key] * decrease_due_to_wind;
+			if (key in generation_delta) {
+				generation_delta[key] -= amount_to_reduce;
+			} else {
+				generation_delta[key] = 0 - amount_to_reduce;
+			}
+		}
 	}
 
-	// now add in the solar
-	gen_production['Solar'] = solar_production;
+	// ********************************************
+	// Change the world
+	// ********************************************
 
+	if (debug) {
+		console.log("Delta: " + JSON.stringify(generation_delta));
+	}
+
+	// apply the required changes to production
+	for (var key in gen_production) {
+		gen_production[key] += generation_delta[key];
+	}
+
+	// extra generation adds more emissions
+	// as per the ratios from the baseline data	
 	for (var key in gen_emissions) {
-		gen_emissions[key] = gen_emissions[key] * increase_in_power_reqts;
+		var emissions_per_unit = 0;
+		if (gen_emissions[key] > 0) {
+			emissions_per_unit = gen_emissions[key] / gen_production[key];
+		}
+
+		gen_emissions[key] += generation_delta[key] * emissions_per_unit;
 	}
 
-	// now apply that factor to the emissions - emissions from EV power requirements
-	for (var key in gen_emissions) {
-		gen_emissions[key] = gen_emissions[key] * increase_in_power_reqts;
-	}
-
-	// also apply the same factor to the generation cost
+	// extra generation adds more cost
+	// as per the ratios from the baseline data
 	for (var key in gen_cost) {
-		gen_cost[key] = gen_cost[key] * increase_in_power_reqts;
+		var cost_per_unit = 0;
+		if (gen_cost[key] > 0) {
+			cost_per_unit = gen_cost[key] / gen_production[key];
+		}
+		gen_cost[key] += generation_delta[key] * cost_per_unit;
 	}
+
 
 	// ********************************************
 	// Data tidying
 	// ********************************************
 	
-	// convert cost from dollars to millions
+	// convert production cost from dollars to millions
 	for (var key in gen_cost) {
 		gen_cost[key] = gen_cost[key] / 1000000;
+	}
+
+	// convert capital cost from dollars to billions
+	for (var key in gen_capital_cost) {
+		gen_capital_cost[key] = gen_capital_cost[key] / 1000000000;
 	}
 
 	// ********************************************
@@ -126,7 +178,9 @@ function shockingUpdate(inputs) {
 		'fleet_emissions': fleet_emissions
 	}
 
-
+	if (debug) {
+		console.log("Result: " + JSON.stringify(result));
+	}
 
 	return result;
 }
@@ -145,7 +199,7 @@ function getBaseline() {
 		'Wind': 2187,
 		'Coal': 1832,
 		'Gas': 6626,
-    'Solar': 0
+		'Solar': 0
 	}
 
 	// annual generation emissions in Kilotons of CO2 Equivalent
@@ -166,10 +220,21 @@ function getBaseline() {
 		'Gas': 161044192
 	}
 
+	// investment cost
+	var gen_capital_cost = {
+		'Hydro': 0,
+		'Geothermal': 0,
+		'Wind': 0,
+		'Coal': 0,
+		'Gas': 0,
+		'Solar': 0
+	}
+
 	var result = {
 		'gen_production': gen_production,
 		'gen_emissions': gen_emissions,
 		'gen_cost': gen_cost,
+		'gen_capital_cost': gen_capital_cost
 	}
 
 	return result;
