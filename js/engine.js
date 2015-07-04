@@ -5,10 +5,11 @@ function shockingUpdate(inputs) {
 
 	console.log("shockingUpdate - Inputs: " + JSON.stringify(inputs));
 
-	var baseline = getBaseline();
-	var gen_production = baseline['gen_production'];
-	var gen_emissions  = baseline['gen_emissions'];
-	var gen_cost       = baseline['gen_cost'];
+	var baseline         = getBaseline();
+	var gen_production   = baseline['gen_production'];
+	var gen_emissions    = baseline['gen_emissions'];
+	var gen_cost         = baseline['gen_cost'];
+	var gen_capital_cost = {};
 
 	// annual vehicle fleet emissions in Kilotons of CO2 Equivalent
 	var fleet_emissions = {
@@ -24,7 +25,7 @@ function shockingUpdate(inputs) {
 	// -----------------
 
 	// ASSUMPTION: there are essentially 0 electric cars in the current fleet
-	var electric_cars = inputs['electric_cars'];
+	var electric_cars = inputs['carNumber'];
 	var electric_pct = electric_cars/100;
 
 	fleet_emissions['Road'] = fleet_emissions['Road'] * (1-electric_pct);
@@ -54,10 +55,10 @@ function shockingUpdate(inputs) {
 	// -----------------
 	// [2] Solar Houses
 	// -----------------
-	var solar_houses = inputs['solar_houses'];
+	var solar_houses = inputs['solarNumber'];
 
 	// ASSUMPTION - each household generates 5260 KWh per year
-	var solar_production = inputs['solar_houses'] * 5260;
+	var solar_production = solar_houses * 5260;
 	// convert to Gwh
 	solar_production = solar_production / 1000000;
 
@@ -66,10 +67,31 @@ function shockingUpdate(inputs) {
 	// reduce proportionally all the other production and emissions
 	var decrease_due_to_solar = solar_production / total_gen;
 	increase_in_power_reqts -= decrease_due_to_solar;
+
+
+	// ----------
+	// [3] Wind
+	// ----------
+	////var new_wind = inputs['windNumber'];
 	
-	for (var key in gen_emissions) {
-		gen_emissions[key] = gen_emissions[key] * increase_in_power_reqts;
+	// Based on: Each new wind farm is 200W; 702 GWh per annum;
+	// capital cost of $521,344,918
+	
+	// first the capital cost, that's easy:
+	////gen_capital_cost['Wind'] = new_wind * 521344918;
+
+	// new wind capacity
+	////var new_wind_capacity = new_wind * 702;
+	// new wind capacity gives us associated production, emissions, and running costs
+
+	/*if (new_wind > 0) {
+		var new_wind_ratio = new_wind_capacity / gen_production['Wind'];
 	}
+
+	gen_production['Wind'] += new_wind_capacity; */
+
+	// TODO: finally reduce the other (hopefully less polluting) generation
+
 
 	// apply the factor to the production
 	for (var key in gen_production) {
@@ -78,6 +100,10 @@ function shockingUpdate(inputs) {
 
 	// now add in the solar
 	gen_production['Solar'] = solar_production;
+
+	for (var key in gen_emissions) {
+		gen_emissions[key] = gen_emissions[key] * increase_in_power_reqts;
+	}
 
 	// now apply that factor to the emissions - emissions from EV power requirements
 	for (var key in gen_emissions) {
@@ -89,6 +115,7 @@ function shockingUpdate(inputs) {
 		gen_cost[key] = gen_cost[key] * increase_in_power_reqts;
 	}
 
+
 	// ********************************************
 	// Output
 	// ********************************************
@@ -96,6 +123,7 @@ function shockingUpdate(inputs) {
 		'gen_production': gen_production,
 		'gen_emissions': gen_emissions,
 		'gen_cost': gen_cost,
+		'gen_capital_cost': gen_capital_cost,
 		'fleet_emissions': fleet_emissions
 	}
 
@@ -146,3 +174,5 @@ function getBaseline() {
 
 	return result;
 }
+
+
