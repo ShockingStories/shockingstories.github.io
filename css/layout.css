@@ -64,3 +64,8 @@ i.fa {
 .decisions p.description {
     clear: both;
 }
+
+/* Line height issue with larger font */
+sup {
+  font-size: 1.5rem;
+}
