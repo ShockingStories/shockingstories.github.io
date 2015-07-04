@@ -12,8 +12,9 @@
   <div class="container">
 <h1>Shocking Stories - Engine Test</h1>
 
+<input type="text" id="ev_factor" value="1"/> Electric %<br/><br/>
 
-<button onclick="shockingUpdate({'electric_cars':1})">Click me</button> and check console
+<button onclick="ev_factor=document.getElementById('ev_factor').value; shockingUpdate({'electric_cars':ev_factor})">Calculate</button> and check console
 
   </body>
 </html>
