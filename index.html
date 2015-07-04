@@ -2,158 +2,201 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Shocking Stories</title>
+    <title>Power Slide NZ</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.js"></script>
     <script type="text/javascript" src="/js/all.js"></script>
+    <script type="text/javascript" src="/js/ui.js"></script>
 
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.js">
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
 
     <link rel="stylesheet" type="text/css" href="css/layout.css">
   </head>
 
   <body>
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <h1><a class="navbar-brand" href="#">PowerSlide NZ</a></h1>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#what">What can we do?</a></li>
+        <li><a href="#ref">References</a></li>
+        <li><a href="#about">About</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
   <div class="container">
-  <h1>Shocking Stories</h1>
+    <div class="well well-sm">
+      See our current greenhouse gas emissions and costs from the energy sector in New Zealand and explore different actions that change them
+    </div> 
   <div class="row metrics">
-    <div class="col-sm-3">
+    <div class="col-xs-3">
       <i class="fa fa-cloud"></i>
       <div id="co2-chart"></div>
       <h3><span id="co2-total">1000</span> Gt</h3>
-      <h3>CO2 Emissions</h3>
+      <h3>CO<sub>2</sub> Emissions <a href="#ref1"><sup>1</sup></a></h3>
     </div>
-    <div class="col-sm-3">
+    <div class="col-xs-3">
       <i class="fa fa-bolt"></i>
       <div id="gwh-chart"></div>
       <h3><span id="gwh-total">1000</span> GWh</h3>
-      <h3>Power Generated</h3>
+      <h3>Power Generated <a href="#ref2"><sup>2</sup></a></h3>
     </div>
-    <div class="col-sm-3">
+    <div class="col-xs-3">
       <i class="fa fa-dollar"></i>
       <div id="cost-chart"></div>
       <h3>$<span id="cost-total">100</span> million</h3>
-      <h3>per Year</h3>
+      <h3>per Year <a href="#ref3"><sup>3</sup></a></h3>
     </div>
-    <div class="col-sm-3">
+    <div class="col-xs-3">
       <i class="fa fa-university"></i>
       <div id="investment-chart"></div>
       <h3>$<span id="investment-total">100</span> billion</h3>
-      <h3>Investment </h3>
+      <h3>Investment <a href="#ref4"><sup>4</sup></a></h3>
     </div>
   </div>
 
-  <h2>What can I do?</h2>
-
+  <a class="anchor" id="what"></a>
+  <h2>What can we do?</h2>
   <div class="row decisions">
-    <div class="col-md-6 media">
-      <div class="media-left">
-        <i class="fa fa-car"></i>
-      </div>
-      <div class="media-body">
-        <h3 class="media-heading">Buy an Electric Car</h3>
-          <form>
-            <input id="carNumber" type="number" name="amountInput" min="0" max="100" value="0" oninput="updateCars(this.value)" /> 
-            <p class="unit">%</p>
-            <input id="carRange" type="range" name="amountRange" min="0" max="100" value="0" oninput="updateCars(this.value)" />
-          </form>
-          <p class="description">Of NZ's cars are electric</p>
-      </div>
-    </div>
 
-    <div class="col-md-6 media">
-      <div class="media-left">
-        <i class="fa fa-sun-o"></i>
-      </div>
-      <div class="media-body">
-        <h3 class="media-heading">Install Solar Panels</h3>
-          <form>
-            <input id="solarNumber" type="number" name="amountInput" min="0" max="100" value="0" oninput="this.form.amountRange.value=this.value" /> 
-            <p class="unit">Homes</p>
-            <input id="solarRange" type="range" name="amountRange" min="0" max="100" value="0" oninput="this.form.amountInput.value=this.value" />
-          </form>
-          <p class="description">in NZ have Solar Panels</p>
-      </div>
-    </div>
-
-    <div class="col-md-6 media">
+    <div class="col-sm-6 media">
       <div class="media-left">
         <i class="fa fa-home"></i>
       </div>
       <div class="media-body">
-        <h3 class="media-heading">Insulate your house</h3>
+        <h3 class="media-heading">Insulate Houses <a href="#ref5"><sup>5</sup></a></h3>
           <form>
-            <input id="homeNumber" type="number" name="amountInput" min="0" max="100" value="0" oninput="this.form.amountRange.value=this.value" /> 
-            <p class="unit">%</p>
-            <input id="homeRange" type="range" name="amountRange" min="0" max="100" value="0" oninput="this.form.amountInput.value=this.value" />
+            <input id="homeRange" type="range" name="amountRange" min="0" max="500000" value="0" oninput="this.form.amountInput.value=this.value" />
+            <input id="homeNumber" type="number" name="amountInput" min="0" max="500000" value="0" oninput="this.form.amountRange.value=this.value" /> 
+            <p class="unit">More Homes in NZ Insulated</p>
           </form>
-          <p class="description">Homes in NZ are insulated</p>
       </div>
     </div>
 
-    <div class="col-md-6 media">
+    <div class="col-sm-6 media">
       <div class="media-left">
-        <i class="fa fa-power-off"></i>
+        <i class="fa fa-sun-o"></i>
       </div>
       <div class="media-body">
-        <h3 class="media-heading">Turn off that light</h3>
+        <h3 class="media-heading">Install Solar Panels <a href="#ref6"><sup>6</sup></a></h3>
           <form>
-            <input id="powerOffNumber" type="number" name="amountInput" min="0" max="100" value="0" oninput="this.form.amountRange.value=this.value" /> 
-            <p class="unit">Minutes</p>
-            <input id="powerOffRange" type="range" name="amountRange" min="0" max="100" value="0" oninput="this.form.amountInput.value=this.value" />
+            <input id="solarRange" type="range" name="amountRange" min="0" max="100" value="0" oninput="this.form.amountInput.value=this.value" />
+            <input id=solarNumber" type="number" name="amountInput" min="0" max="100" value="0" oninput="this.form.amountRange.value=this.value" /> 
+            <p class="unit">Homes in NZ with 4kW Solar Panels</p>
           </form>
-          <p class="description">Average light usage per person in NZ</p>
       </div>
     </div>
 
-    <div class="col-md-6 media">
+    <div class="col-sm-6 media">
       <div class="media-left">
         <img src=windmill.png>
       </div>
       <div class="media-body">
-        <h3 class="media-heading">Build more Windfarms</h3>
+        <h3 class="media-heading">Build Windfarms <a href="#ref7"><sup>7</sup></a></h3>
           <form>
-            <input id="windfarmNumber" type="number" name="amountInput" min="0" max="100" value="0" oninput="this.form.amountRange.value=this.value" /> 
-            <p class="unit">GWh</p>
-            <input id="windfarmRange" type="range" name="amountRange" min="0" max="100" value="0" oninput="this.form.amountInput.value=this.value" />
+            <input id="windfarmRange" type="range" name="amountRange" min="0" max="19" value="0" oninput="this.form.amountInput.value=this.value" />
+            <input id="windfarmNumber" type="number" name="amountInput" min="0" max="19" value="0" oninput="this.form.amountRange.value=this.value" /> 
+            <p class="unit">New 200 MW Windfarms</p>
           </form>
-          <p class="description">Capacity of Wind Farms in NZ</p>
       </div>
     </div>
 
-    <div class="col-md-6 media">
+    <div class="col-sm-6 media">
       <div class="media-left">
-        <i class="fa fa-bus"></i>
+        <i class="fa fa-car"></i>
       </div>
       <div class="media-body">
-        <h3 class="media-heading">Take the Bus</h3>
+        <h3 class="media-heading">Buy Electric Cars <a href="#ref8"><sup>8</sup></a></h3>
           <form>
-            <input id="busNumber" type="number" name="amountInput" min="0" max="100" value="0" oninput="this.form.amountRange.value=this.value" /> 
-            <p class="unit">%</p>
-            <input id="busRange" type="range" name="amountRange" min="0" max="100" value="0" oninput="this.form.amountInput.value=this.value" />
+            <input id="carRange" type="range" name="amountRange" min="0" max="100" value="100" oninput="updateCars(this.value)" />
+            <input id="carNumber" type="number" name="amountInput" min="0" max="100" value="100" oninput="updateCars(this.value)" /> 
+            <p class="unit">% Electric Cars</p>
           </form>
-          <p class="description">People who commute by Bus</p>
       </div>
     </div>
 
-    <div class="col-md-6 media">
+    <div class="col-sm-6 media">
       <div class="media-left">
         <i class="fa fa-bicycle"></i>
       </div>
       <div class="media-body">
-        <h3 class="media-heading">Get on ya Bike</h3>
+        <h3 class="media-heading">Get on ya Bike <a href="#ref9"><sup>9</sup></a></h3>
           <form>
+            <input id="bicycleRange" type="range" name="amountRange" min="0" max="100" value="0" oninput="this.form.amountInput.value=this.value" />
             <input id="bicycleNumber" type="number" name="amountInput" min="0" max="100" value="0" oninput="this.form.amountRange.value=this.value" /> 
             <p class="unit">%</p>
-            <input id="bicycleRange" type="range" name="amountRange" min="0" max="100" value="0" oninput="this.form.amountInput.value=this.value" />
           </form>
           <p class="description">People who commute by Bicycle</p>
       </div>
     </div>
 
+    <div id="powerOff" class="col-sm-6 media">
+      <div class="media-left">
+        <i class="fa fa-power-off"></i>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading">Turn off your computer</h3>
+        <input id="powerOffRange" type="range" name="amountRange" min="0" max="100" value="0" oninput="powerOff()" />
+      </div>
+    </div>
   </div>
-
+  
+  <a class="anchor" id="ref"></a>
+  <h2>References</h2>
+  <a class="anchor" id="ref1"></a>
+  <h3><sup>1</sup> CO<sub>2</sub> Emissions</h3>
+  
+  <a class="anchor" id="ref2"></a>
+  <h3><sup>2</sup> Power Generated</h3>
+  
+  <a class="anchor" id="ref3"></a>
+  <h3><sup>3</sup> Cost Per Year</h3>
+  
+  <a class="anchor" id="ref4"></a>
+  <h3><sup>4</sup> Investment</h3>
+  
+  <a class="anchor" id="ref5"></a>
+  <h3><sup>5</sup> Home Insulation</h3>
+  
+  <a class="anchor" id="ref6"></a>
+  <h3 id="ref6"><sup>6</sup> Solar Panels</h3>
+  
+  <a class="anchor" id="ref7"></a>
+  <h3><sup>7</sup> Windfarms</h3>
+  
+  <a class="anchor" id="ref8"></a>
+  <h3><sup>8</sup> Electric Cars</h3>
+  
+  <a class="anchor" id="ref9"></a>
+  <h3><sup>9</sup> Bicycles</h3>
+  
+  
+  <a class="anchor" id="about"></a>
+  <h2>About</h2>
+  <p>GovHack ya ya</p>
+  <h3>Video</h3>
+  GitHub
+  <h3 id="ref">Team</h3>
+  <h4 id="ref">Ross</h4>
+  <h4 id="ref">Rich</h4>
+  <h4 id="ref">Michael</h4>
+  <h4 id="ref">Martin</h4>
+  <h4 id="ref">Rob</h4>
   </body>
 </html>
