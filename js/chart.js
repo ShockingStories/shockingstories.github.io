@@ -98,7 +98,13 @@ function updateGraph (bindTo, data) {
   y = d3.scale.linear().range([0, h]);
   z = d3.scale.ordinal().range(colors);
 
-  var remapped = ["c1","c2","c3","c4","c5"].map(function(dat,i){
+  // Cope with variable number of properties, for now
+  var a = [];
+  for (var i = 1; i < matrix[0].length; i++) {
+    a.push("c" + i);
+  }
+  //var remapped = ["c1","c2","c3","c4","c5"].map(function(dat,i){
+  var remapped = a.map(function(dat,i){
     return matrix.map(function(d,ii){
       return {x: ii, y: d[i+1] };
     })
