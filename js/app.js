@@ -1,3 +1,5 @@
+var totals = {};
+
 document.addEventListener("DOMContentLoaded", function(event) {
   updateCars(0);
   columnGraph("#cost-chart", [
@@ -15,6 +17,7 @@ function updateCars (value) {
 
   var data = shockingUpdate({'electric_cars': value});
 
+  console.log("Data from shockingUpdate: ", data);
   updateGraph('gwh-chart', data.gen_production);
   updateGraph('co2-chart', {
     'Geothermal': data.gen_emissions['Geothermal'],

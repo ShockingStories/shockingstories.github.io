@@ -22,7 +22,7 @@ function preprocessData (data, delta) {
   return values;
 }
 
-function updateTotal(prefix, data) {
+function updateTotal(totalId, data) {
   var total = 0;
   for (var k in data) {
     if(data.hasOwnProperty(k)){
@@ -30,7 +30,8 @@ function updateTotal(prefix, data) {
     }
   }
   total = Math.round(total);
-  document.getElementById(prefix + '-total').innerHTML = total;
+  console.log("Updated total: ", total);
+  document.getElementById(totalId).innerHTML = total;
 
   return total;
 }
@@ -39,10 +40,17 @@ function updateGraph (bindTo, data) {
   var w = 80;
   var h = 300;
 
-  var prefix = bindTo.split('-')[0];
-  var oldTotal = parseInt(document.getElementById(prefix + '-total').innerHTML, 10);
-  var newTotal = updateTotal(prefix, data);
-  var delta = oldTotal - newTotal;
+  console.log("Data passed in: ", data);
+  var totalId = bindTo.split('-')[0] + '-total';
+  var newTotal = updateTotal(totalId, data);
+
+  // Store as global for the life of the document
+  if (!totals[totalId]) {
+    console.log("Element: ",totalId, document.getElementById(totalId).innerHTML);
+    totals[totalId] = parseInt(document.getElementById(totalId).innerHTML, 10);
+    console.log("TOTALS: ", totals);
+  }
+  var delta = totals[totalId] - newTotal;
 
   // Hacky: remove chart if it exists
   // TODO: transition!
@@ -60,6 +68,7 @@ function updateGraph (bindTo, data) {
 
   // If difference between totals is positive, an additional array element
   // will be added to pad the chart as the total shrinks
+  console.log("DELTA: ", delta);
   var matrix = [preprocessData(data, delta)];
 
   // Random for now
@@ -69,7 +78,7 @@ function updateGraph (bindTo, data) {
 
     // Padding colour
     if (delta > 0) {
-      colors[matrix[0].length-1] = "white";
+      colors[matrix[0].length-1] = "rgb(255,255,255)";
     }
   }
 
