@@ -22,6 +22,13 @@ function preprocessData (data, delta) {
     }
   }
 
+   //Eliminate negative size rects
+  for (var i = 1; i < values.length-1; i++) {
+    if (values[i] < 0) {
+      values[i] = 0;
+    }
+  }
+
   return values;
 }
 
@@ -133,7 +140,6 @@ function updateGraph (bindTo, data) {
     a.push("c" + i);
   }
 
-  //var remapped = ["c1","c2","c3","c4","c5"].map(function(dat,i){
   var remapped = a.map(function(dat,i){
     return matrix.map(function(d,ii){
       return {x: ii, y: d[i+1] };
