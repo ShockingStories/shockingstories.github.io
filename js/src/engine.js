@@ -252,6 +252,7 @@ function getBaseline() {
 		'Geothermal': 0,
 		'Wind': 0,
 		'Coal': 0,
+    'Insulation': 0,
 		'Gas': 0,
 		'Solar': 0
 	}

@@ -25,13 +25,13 @@ function updateCharts (prefix, value) {
 
   var data = shockingUpdate(getRangeValues());
 
-  updateGraph('gwh-chart', data.gen_production);
   updateGraph('co2-chart', {
     'Geothermal': data.gen_emissions['Geothermal'],
     'Coal': data.gen_emissions['Coal'],
     'Gas': data.gen_emissions['Gas'],
     'Road': data.fleet_emissions['Road']
   });
+  updateGraph('gwh-chart', data.gen_production);
   updateGraph('cost-chart', data.gen_cost);
   updateGraph('investment-chart', data.gen_capital_cost);
 }

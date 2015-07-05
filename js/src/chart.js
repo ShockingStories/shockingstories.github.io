@@ -33,6 +33,9 @@ function updateTotal(totalId, data) {
     }
   }
   total = Math.round(total);
+  if (total < 0) {
+    total = 0;
+  }
   document.getElementById(totalId).innerHTML = total.toLocaleString();
 
   return total;
@@ -72,6 +75,7 @@ function assignColors(prefix, delta) {
       colors.push('#ff9900'); // Geothermal
       colors.push('#c9daf8'); // Wind
       colors.push('#999999'); // Coal
+      colors.push('#ffb9b9'); // Insulation
       colors.push('#f3f3f3'); // Gas
       colors.push('#ffd966'); // Solar
       break;
