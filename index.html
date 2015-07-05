@@ -45,8 +45,8 @@
       See our current greenhouse gas emissions and costs from the energy sector in New Zealand and explore different actions that change them
     </div> 
   <div class="row metrics">
+    <!-- Buffer -->
     <div class="col-xs-1 key">
-        [> BUFFER <]
     </div>
     <div class="col-xs-2">
       <i class="fa fa-cloud"></i>
@@ -150,8 +150,8 @@
       <div class="media-body">
         <h3 class="media-heading">Get on ya Bike <a href="#ref9"><sup>9</sup></a></h3>
           <form>
-            <input id="bicycleRange" type="range" name="amountRange" min="0" max="100" value="0" oninput="this.form.amountInput.value=this.value" />
-            <input id="bicycleNumber" type="number" name="amountInput" min="0" max="100" value="0" oninput="this.form.amountRange.value=this.value" /> 
+            <input id="bicycleRange" type="range" name="amountRange" min="0" max="100" value="0" oninput="updateCharts('bicycle', this.value)" />
+            <input id="bicycleNumber" type="number" name="amountInput" min="0" max="100" value="0" oninput="updateCharts('bicycle', this.value)" /> 
             <p class="unit">%</p>
           </form>
           <p class="description">People who commute by Bicycle</p>

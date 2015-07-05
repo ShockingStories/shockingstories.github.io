@@ -85,6 +85,7 @@ function assignColors(prefix, delta) {
       colors.push('#ffb9b9'); // Insulation
       colors.push('#f3f3f3'); // Gas
       colors.push('#ffd966'); // Solar
+      colors.push('#34495e'); // Road
       break;
   }
 
