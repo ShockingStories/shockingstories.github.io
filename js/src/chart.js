@@ -100,6 +100,9 @@ function assignColors(prefix, delta) {
 function updateGraph (bindTo, data) {
   var w = 80;
   var h = 300;
+  if (document.documentElement.clientWidth < 550) {
+    w = 50;    
+  }
 
   var prefix = bindTo.split('-')[0];
   var totalId = prefix + '-total';
@@ -170,6 +173,6 @@ function updateGraph (bindTo, data) {
     .attr("x", function(d) { return x(d.x); })
     .attr("y", function(d) { return -y(d.y0) - y(d.y); })
     .attr("height", function(d) { return y(d.y); })
-    .attr("width", Math.min.apply(null, [x.rangeBand()-2, 100]));
+    .attr("width", Math.min.apply(null, [x.rangeBand()-2, w]));
 }
 
