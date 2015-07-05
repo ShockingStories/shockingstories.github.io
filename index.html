@@ -110,8 +110,8 @@
       <div class="media-body">
         <h3 class="media-heading">Build Windfarms <a href="#ref7"><sup>7</sup></a></h3>
           <form>
-            <input id="windfarmRange" type="range" name="amountRange" min="0" max="19" value="0" oninput="this.form.amountInput.value=this.value" />
-            <input id="windfarmNumber" type="number" name="amountInput" min="0" max="19" value="0" oninput="this.form.amountRange.value=this.value" /> 
+            <input id="windfarmRange" type="range" name="amountRange" min="0" max="19" value="0" oninput="updateCharts('windfarm', this.value)" />
+            <input id="windfarmNumber" type="number" name="amountInput" min="0" max="19" value="0" oninput="updateCharts('windfarm', this.value)" /> 
             <p class="unit">New 200 MW Windfarms</p>
           </form>
       </div>
