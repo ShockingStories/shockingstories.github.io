@@ -9,16 +9,16 @@ function shockingUpdate(inputs) {
 		debug = true;
 	}
 
+	if (debug) {
+		console.log("Inputs: " + JSON.stringify(inputs));
+	}
+
 	var baseline         = getBaseline();
 	var gen_production   = baseline['gen_production'];
 	var gen_emissions    = baseline['gen_emissions'];
 	var gen_cost         = baseline['gen_cost'];
 	var gen_capital_cost = baseline['gen_capital_cost'];
-
-	// annual vehicle fleet emissions in Kilotons of CO2 Equivalent
-	var fleet_emissions = {
-		'Road': 12688
-	}
+	var fleet_emissions  = baseline['fleet_emissions'];
  
 	// ********************************************
 	// Business logic
@@ -36,15 +36,28 @@ function shockingUpdate(inputs) {
 
 	var generation_delta = {};
 
+
 	// -----------------
-	// [1] Electric cars
+	// [1] Transport
 	// -----------------
+
+	var electric_cars = inputs['carNumber'];
+	var bikes = inputs['bicycleNumber'];
 
 	// ASSUMPTION: there are essentially 0 electric cars in the current fleet
-	var electric_cars = inputs['carNumber'];
-	var electric_pct = electric_cars/100;
+	// ASSUMPTION: there are essentially 0 car-free people currently
+	// ASSUMPTION - in a gross oversimplification, riding a bike simply
+	//              takes your car off the road.  100% bikes == 0 cars.
+	// ASSUMPTION - bikes trumps cars.  Take bikes off the top first,
+	//              then the remainder is divided up according to the
+	//              electric car percentage
+	var fleet_reduction = 1;
+	fleet_reduction -= bikes/100;
+	fleet_reduction *= (1 - electric_cars/100);
 
-	fleet_emissions['Road'] = fleet_emissions['Road'] * (1-electric_pct);
+	electric_pct = (electric_cars/100)*(1-(bikes/100));
+
+	fleet_emissions['Road'] = fleet_emissions['Road'] * fleet_reduction;
 
 	// ASSUMPTION: any uptick in power generation required to meet
 	// electric car demand, will be met proportionally by all generation sources
@@ -61,6 +74,9 @@ function shockingUpdate(inputs) {
 	for (var key in gen_production) {
 		generation_delta[key] = gen_production[key] * increase_in_power_reqts;
 	}
+
+	// finally we gotta pay for all those electric cars, estimated at $40,000 each
+	gen_capital_cost['Road'] = electric_pct * 3341013 * 40000;
 
 
 	// -----------------
@@ -122,8 +138,9 @@ function shockingUpdate(inputs) {
 		}
 	}
 
+
 	// --------------
-	// [3] Insulation
+	// [4] Insulation
 	// --------------
 	var new_insul = inputs['homeNumber'];
 
@@ -143,6 +160,13 @@ function shockingUpdate(inputs) {
 		power_savings_from_insul,
 		[]
 	);
+
+
+	// --------------
+	// [5] Bike
+	// --------------
+
+
 
 	// ********************************************
 	// Change the world
@@ -252,16 +276,23 @@ function getBaseline() {
 		'Geothermal': 0,
 		'Wind': 0,
 		'Coal': 0,
-    'Insulation': 0,
+		'Insulation': 0,
 		'Gas': 0,
-		'Solar': 0
+		'Solar': 0,
+		'Road': 0
+	}
+
+	// annual vehicle fleet emissions in Kilotons of CO2 Equivalent
+	var fleet_emissions = {
+		'Road': 12688
 	}
 
 	var result = {
 		'gen_production': gen_production,
 		'gen_emissions': gen_emissions,
 		'gen_cost': gen_cost,
-		'gen_capital_cost': gen_capital_cost
+		'gen_capital_cost': gen_capital_cost,
+		'fleet_emissions': fleet_emissions
 	}
 
 	return result;

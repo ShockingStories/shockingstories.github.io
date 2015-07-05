@@ -5,7 +5,7 @@
     <title>Shocking Stories</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <script type="text/javascript" src="/js/engine.js"></script>
+    <script type="text/javascript" src="/js/src/engine.js"></script>
   </head>
 
   <body>
@@ -16,18 +16,21 @@
 <input type="text" id="solar_factor" value="100000"/> Solar Houses<br/><br/>
 <input type="text" id="wind_factor" value="5"/>New Wind Farms<br/><br/>
 <input type="text" id="insulation_factor" value="10"/>Insulation Houses<br/><br/>
+<input type="text" id="bike" value="10"/>Bike<br/><br/>
 
 <button onclick="
 		ev_factor=document.getElementById('ev_factor').value;
 		solar_factor=document.getElementById('solar_factor').value;
 		new_wind=document.getElementById('wind_factor').value;
 		insulation=document.getElementById('insulation_factor').value;
+		bike=document.getElementById('bike').value;
 		shockingUpdate({
 			'debug': 1,
 			'carNumber':ev_factor,
 			'solarNumber': solar_factor,
 			'windfarmNumber': new_wind,
-			'homeNumber': insulation
+			'homeNumber': insulation,
+			'bicycleNumber': bike
 		})">Calculate</button> and check console
 
   </body>
