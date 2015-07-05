@@ -1,13 +1,11 @@
 var totals = {
-  'gwh-total': 50000, // Start with higher than expected value, leaving room
-  'cost-total': 550
+  'gwh-total': 50000,     // Start with higher than expected value, leaving room
+  'cost-total': 550,      // million
+  'investment-total': 50  // billion
 };
 
 document.addEventListener("DOMContentLoaded", function(event) {
   updateCharts('car', 0);
-  columnGraph("#investment-chart", [
-    1, 5, 10, 15, 45, 50
-  ]);
 });
 
 // Each slider's value, to pass to calculator
@@ -35,4 +33,5 @@ function updateCharts (prefix, value) {
     'Road': data.fleet_emissions['Road']
   });
   updateGraph('cost-chart', data.gen_cost);
+  updateGraph('investment-chart', data.gen_capital_cost);
 }
