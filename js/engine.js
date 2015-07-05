@@ -62,6 +62,7 @@ function shockingUpdate(inputs) {
 		generation_delta[key] = gen_production[key] * increase_in_power_reqts;
 	}
 
+
 	// -----------------
 	// [2] Solar Houses
 	// -----------------
@@ -77,17 +78,12 @@ function shockingUpdate(inputs) {
 	generation_delta['Solar'] = solar_production;
 
 	// reduce proportionally all the non-solar production
-	var decrease_due_to_solar = solar_production / total_gen;
-	for (var key in gen_production) {
-		if (gen_production[key] != 'Solar') {
-			var amount_to_reduce = gen_production[key] * decrease_due_to_solar;
-			if (key in generation_delta) {
-				generation_delta[key] -= amount_to_reduce;
-			} else {
-				generation_delta[key] = 0 - amount_to_reduce;
-			}
-		}
-	}
+	generation_delta = reduceDemand(
+		generation_delta,
+		gen_production,
+		solar_production,
+		['Solar']
+	);
 
 
 	// ----------
@@ -106,6 +102,14 @@ function shockingUpdate(inputs) {
 
 	// other production methods do proportionally less work
 	// due to the extra wind production
+	// (it'd be crazy to reduce any solar though!  So include solar in exceptions)
+	generation_delta = reduceDemand(
+		generation_delta,
+		gen_production,
+		generation_delta['Wind'],
+		['Solar','Wind']
+	);
+	
 	var decrease_due_to_wind = generation_delta['Wind'] / total_gen;
 	for (var key in gen_production) {
 		if (gen_production[key] != 'Wind') {
@@ -117,6 +121,28 @@ function shockingUpdate(inputs) {
 			}
 		}
 	}
+
+	// --------------
+	// [3] Insulation
+	// --------------
+	var new_insul = inputs['homeNumber'];
+
+	// ASSUMPTION - Insulation will simply directly reduce electricity demand
+	// costs $7630 per home; generates (saves) 3571 kwh per year 
+
+	// capital cost
+	gen_capital_cost['Insulation'] = new_insul * 7630;
+	
+	power_savings_from_insul = new_insul * 3571;
+	// convert to gwh
+	power_savings_from_insul = power_savings_from_insul / 1000000;
+
+	generation_delta = reduceDemand(
+		generation_delta,
+		gen_production,
+		power_savings_from_insul,
+		[]
+	);
 
 	// ********************************************
 	// Change the world
@@ -241,3 +267,32 @@ function getBaseline() {
 }
 
 
+// Determine change in power generation based on the requested reduction.
+// Don't reduce anything in the list of exceptions.
+//
+// Returns: updated generation delta
+function reduceDemand(generation_delta, gen_production, reduction, exceptions) {
+
+	// work out total current generation
+	var total_gen = 0;
+	for (var key in gen_production) {
+		total_gen += gen_production[key];
+	}
+
+	// decrease all forms of generation proportionally due to lower demand
+	var decrease = reduction / total_gen;
+	for (var key in gen_production) {
+		if (exceptions.indexOf(key) != -1) {
+			continue;
+		}
+		var amount_to_reduce = gen_production[key] * decrease;
+		if (key in generation_delta) {
+			generation_delta[key] -= amount_to_reduce;
+		} else {
+			generation_delta[key] = 0 - amount_to_reduce;
+		}
+	}
+
+	return generation_delta;
+}
+	
