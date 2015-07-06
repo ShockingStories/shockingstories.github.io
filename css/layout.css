@@ -1,5 +1,3 @@
-/* Other project styles */
-
 body { 
     padding-top: 70px;
 }
@@ -33,6 +31,7 @@ a.anchor {
 }
 .metrics h3 {
     margin: 5px 0;
+    min-height: 53px;
 }
 
 .chart {
@@ -40,10 +39,10 @@ a.anchor {
 }
 
 .key {
-    margin-top: 120px;
+    margin-top: 125px;
     text-align: left;
     float: left;
-    }
+}
 
 .key .color {
     height: 20px;
@@ -57,7 +56,10 @@ a.anchor {
 .key span{
     margin: 10px 0 0 5px;
     float: left;
-    
+}
+#thermal {
+  margin: 0;
+  float: none;
 }
 .key .hydro {
   background-color: #6d9eeb;
@@ -134,4 +136,49 @@ i.fa {
 /* Line height issue with larger font */
 sup {
   font-size: 1.5rem;
+}
+
+@media (max-width: 700px) {
+  #thermal {
+    display: none;
+  }
+  #h3-emissions {
+    display: none;
+  }
+  #h3-generated {
+    display: none;
+  }
+  .key span{
+      margin: 5 0 0 0px;
+      font-size: 1.0rem;
+  }
+}
+
+@media (max-width: 550px) {
+  .metrics h3 {
+    font-size: 1.5rem;
+  }
+
+  sup {
+    font-size: 1rem;
+  }
+
+  .metrics i {
+    font-size: 4rem;
+  }
+
+  .key {
+      margin-top: 120px;
+  }
+
+  .key .color {
+      height: 10px;
+      width: 10px;
+      margin-top: 10px;
+  }
+  .key span{
+      margin: 5 0 0 0px;
+      float: left;
+      font-size: 1.0rem;
+  }
 }

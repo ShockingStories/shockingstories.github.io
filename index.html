@@ -4,7 +4,8 @@
     <meta charset="utf-8">
     <title>Power Slide NZ</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/js/all.js"></script>
 
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css">
@@ -44,18 +45,18 @@
       See our current greenhouse gas emissions and costs from the energy sector in New Zealand and explore different actions that change them
     </div> 
   <div class="row metrics">
+    <!-- Buffer -->
     <div class="col-xs-1 key">
-        <!-- BUFFER -->
     </div>
     <div class="col-xs-2">
       <i class="fa fa-cloud"></i>
-      <h3>CO<sub>2</sub> Emissions</h3>
+      <h3>CO<sub>2</sub> <span id="h3-emissions">Emissions</span></h3>
       <div id="co2-chart" class="chart"></div>
       <h3><span id="co2-total">1000</span> kt <a href="#ref1"><sup>1</sup></a></h3>
     </div>
     <div class="col-xs-2">
       <i class="fa fa-bolt"></i>
-      <h3>Power Generated</h3>
+      <h3>Power <span id="h3-generated">Generated</span></h3>
       <div id="gwh-chart" class="chart"></div>
       <h3><span id="gwh-total">1000</span> GWh <a href="#ref2"><sup>2</sup></a></h3>
     </div>
@@ -69,16 +70,16 @@
       <i class="fa fa-university"></i>
       <h3>Investment Cost</h3>
       <div id="investment-chart" class="chart"></div>
-      <h3>$<span id="investment-total">100</span> million <a href="#ref4"><sup>4</sup></a></h3>
+      <h3>$<span id="investment-total">100</span> billion <a href="#ref4"><sup>4</sup></a></h3>
     </div>
     <div class="col-xs-2 key">
-      <div class="color hydro"></div><span> Hydro</span>
-      <div class="color geo"></div><span> Geothermal</span>
-      <div class="color wind"></div><span> Wind</span>
-      <div class="color coal"></div><span> Coal</span>
-      <div class="color gas"></div><span> Gas</span>
-      <div class="color solar"></div><span> Solar</span>
       <div class="color vehicles"></div><span> Vehicles</span>
+      <div class="color solar"></div><span> Solar</span>
+      <div class="color gas"></div><span> Gas</span>
+      <div class="color coal"></div><span> Coal</span>
+      <div class="color wind"></div><span> Wind</span>
+      <div class="color geo"></div><span> Geo<span id="thermal">thermal</span></span>
+      <div class="color hydro"></div><span> Hydro</span>
     </div>
   </div>
 
@@ -93,8 +94,8 @@
       <div class="media-body">
         <h3 class="media-heading">Insulate Houses <a href="#ref5"><sup>5</sup></a></h3>
           <form>
-            <input id="homeRange" type="range" name="amountRange" min="0" max="250000" value="0" step=1000 oninput="this.form.amountInput.value=this.value" />
-            <input id="homeNumber" type="number" name="amountInput" min="0" max="250000" value="0" step=1000 oninput="this.form.amountRange.value=this.value" /> 
+            <input id="homeRange" type="range" name="amountRange" min="0" max="500000" value="0" step=1000 oninput="updateCharts('home', this.value)" />
+            <input id="homeNumber" type="number" name="amountInput" min="0" max="500000" value="0" step=1000 oninput="updateCharts('home', this.value)" /> 
             <p class="unit">More Homes in NZ Insulated</p>
           </form>
       </div>
@@ -108,7 +109,7 @@
         <h3 class="media-heading">Install Solar Panels <a href="#ref6"><sup>6</sup></a></h3>
           <form>
             <input id="solarRange" type="range" name="amountRange" min="0" max="1000000" value="0" step=1000 oninput="updateCharts('solar', this.value)" />
-            <input id="solarNumber" type="number" name="amountInput" min="0" max="1000000" value="0" step=1000 lang="nb" oninput="updateCharts('solar', this.value)" /> 
+            <input id="solarNumber" type="number" name="amountInput" min="0" max="1000000" value="0" step=1000 oninput="updateCharts('solar', this.value)" /> 
             <p class="unit">Homes in NZ with Solar Panels</p>
           </form>
       </div>
@@ -121,8 +122,8 @@
       <div class="media-body">
         <h3 class="media-heading">Build Windfarms <a href="#ref7"><sup>7</sup></a></h3>
           <form>
-            <input id="windfarmRange" type="range" name="amountRange" min="0" max="19" value="0" oninput="this.form.amountInput.value=this.value" />
-            <input id="windfarmNumber" type="number" name="amountInput" min="0" max="19" value="0" oninput="this.form.amountRange.value=this.value" /> 
+            <input id="windfarmRange" type="range" name="amountRange" min="0" max="19" value="0" oninput="updateCharts('windfarm', this.value)" />
+            <input id="windfarmNumber" type="number" name="amountInput" min="0" max="19" value="0" oninput="updateCharts('windfarm', this.value)" /> 
             <p class="unit">New 200 MW Windfarms</p>
           </form>
       </div>
@@ -135,12 +136,12 @@
       <div class="media-body">
         <h3 class="media-heading">Buy Electric Cars <a href="#ref8"><sup>8</sup></a></h3>
           <form>
-            <input id="carRange" type="range" name="amountRange" min="0" max="100" value="100" oninput="updateCharts('car', this.value)" />
-            <input id="carNumber" type="number" name="amountInput" min="0" max="100" value="100" oninput="updateCharts('car', this.value)" />
+            <input id="carRange" type="range" name="amountRange" min="0" max="50" value="0" oninput="updateCharts('car', this.value)" />
+            <input id="carNumber" type="number" name="amountInput" min="0" max="50" value="0" oninput="updateCharts('car', this.value)" />
             <p class="unit">% Electric Cars</p> 
             <!-- ROSS: UNCOMMENT AND REPLACE ABOVE WHEN FUNCTION CHANGES FROM % to Number 
-            <input id="carRange" type="range" name="amountRange" min="0" max="100" value="1000000" step=1000 oninput="updateCharts('car', this.value)" />
-            <input id="carNumber" type="number" name="amountInput" min="0" max="100" value="1000000" step=1000 oninput="updateCharts('car', this.value)" />
+            <input id="carRange" type="range" name="amountRange" min="0" max="1000000" value="0" step=1000 oninput="updateCharts('car', this.value)" />
+            <input id="carNumber" type="number" name="amountInput" min="0" max="1000000" value="0" step=1000 oninput="updateCharts('car', this.value)" />
             <p class="unit">Electric Cars</p>
             --> 
           </form>
@@ -152,11 +153,16 @@
         <i class="fa fa-bicycle"></i>
       </div>
       <div class="media-body">
-        <h3 class="media-heading">Get on ya Bike <a href="#ref9"><sup>9</sup></a></h3>
+        <h3 class="media-heading">Get On Ya Bike!<a href="#ref9"><sup>9</sup></a></h3>
           <form>
-            <input id="bicycleRange" type="range" name="amountRange" min="0" max="1000000" value="0" step=1000 oninput="this.form.amountInput.value=this.value" />
-            <input id="bicycleNumber" type="number" name="amountInput" min="0" max="1000000" value="0" step=1000 oninput="this.form.amountRange.value=this.value" /> 
+            <!-- ROSS: UNCOMMENT AND REPLACE ABOVE WHEN FUNCTION CHANGES FROM % to Number 
+            <input id="bicycleRange" type="range" name="amountRange" min="0" max="1000000" value="0" step=1000 oninput="updateCharts('bicycle', this.value)" />
+            <input id="bicycleNumber" type="number" name="amountInput" min="0" max="1000000" value="0" step=1000 oninput="updateCharts('bicycle', this.value)" /> 
             <p class="unit bike">More People Commuting by Bicycle</p>
+            --> 
+            <input id="bicycleRange" type="range" name="amountRange" min="0" max="100" value="0" oninput="updateCharts('bicycle', this.value)" />
+            <input id="bicycleNumber" type="number" name="amountInput" min="0" max="100" value="0" oninput="updateCharts('bicycle', this.value)" /> 
+            <p class="unit">% People Commuting by Bicycle</p>
           </form>
       </div>
     </div>
@@ -174,70 +180,102 @@
   
   <a class="anchor" id="ref"></a>
   <h2>References</h2>
+  <p>DISCLAIMER: PowerSlideNZ is a proof of concept and currently only in the BETA testing phase. These calculation need to be validated and should not be used to plan energy investments. <a href= "mailto:info@powerslide.nz">Let us know</a> if you are interested in supporting the further development of PowerSlide.</p>
+  <p>Aggregation and analysis of these data sources can be found on the <a href="https://docs.google.com/spreadsheets/d/1rjZZg19gH4ST3XFfPaUmvgC90ACKgRw8x-MgoozkLfI/edit?usp=sharing">PowerSlideNZ Data Reference Google Spreadsheet</a>
   <a class="anchor" id="ref1"></a>
   <h3><sup>1</sup> CO<sub>2</sub> Emissions</h3>
-  <ul>
-    <li>Energy sector greenhouse gas emissions <a href=http://www.med.govt.nz/sectors-industries/energy/energy-modelling/data/greenhouse-gas-emissions>Energy sector greenhouse gas emissions</a> (<a href=>Ministry of Business Innovation and Employment<a>)</li>
-    <li>Carbon dioxide equivalent emissions (CO2-e) from domestic transport (road, rail, maritime, aviation) <a href=http://www.transport.govt.nz/ourwork/tmif/environmental/ei001/>Carbon dioxide equivalent emissions (CO2-e) from domestic transport (road, rail, maritime, aviation)</a> (<a href=>Ministry of Transport<a>)</li>  </ul>
-  
+    <ul>
+      <li>Carbon dioxide emissions equivalent, <a href=http://www.med.govt.nz/sectors-industries/energy/energy-modelling/data/greenhouse-gas-emissions>Energy sector greenhouse gas emissions</a>, (<a href=http://www.mbie.govt.nz/>Ministry of Business Innovation and Employment</a>)</li>
+      <li>Carbon dioxide equivalent emissions (CO2-e) from domestic transport (road, rail, maritime, aviation), <a href=http://www.transport.govt.nz/ourwork/tmif/environmental/ei001/>Environmental impact of transport : Climate change</a>, (<a href=http://www.transport.govt.nz/>Ministry of Transport</a>)</li>
+    </ul>
   <a class="anchor" id="ref2"></a>
   <h3><sup>2</sup> Power Generated</h3>
   <ul>
-    <li>Electricity graph and data tables <a href=http://www.med.govt.nz/sectors-industries/energy/energy-modelling/data/electricity>Electricity graph and data tables</a> (<a href=>Ministry of Business Innovation and Employment<a>)</li>
+      <li>Annual electricity generation and consumption (Net Generation (GWh)), <a href=http://www.med.govt.nz/sectors-industries/energy/energy-modelling/data/electricity>Electricity graph and data tables</a>, (<a href=http://www.mbie.govt.nz/>Ministry of Business Innovation and Employment</a>)</li>
   </ul>
   
   <a class="anchor" id="ref3"></a>
   <h3><sup>3</sup> Cost Per Year</h3>
   <ul>
-    <li>Electricity graph and data tables <a href=http://www.med.govt.nz/sectors-industries/energy/energy-modelling/data/electricity>Electricity graph and data tables</a> (<a href=http://www.mbie.govt.nz/>Ministry of Business Innovation and Employment<a>)</li>
+      <li>Generation costs, not retail costs.</li>
+      <li>Fixed and Variable Operation and Maintenance Costs, <a href=http://www.med.govt.nz/sectors-industries/energy/energy-modelling/technical-papers/2011-nz-generation-data-update>2011 NZ Generation Data Update</a>, (<a href=http://www.mbie.govt.nz/>Ministry of Business Innovation and Employment</a>)</li>
+      <li>New Zealand and Foreign Exchange Capital Investment, <a href=http://www.med.govt.nz/sectors-industries/energy/energy-modelling/modelling/interactive-electricity-generation-cost-model>Interactive Electricity Generation Cost Model</a>, (<a href=http://www.mbie.govt.nz/>Ministry of Business Innovation and Employment</a>)</li>
   </ul>
   
   <a class="anchor" id="ref4"></a>
   <h3><sup>4</sup> Investment</h3>
   <ul>
-    <li>Ignores sunk costs</li> 
+      <li>This tool ignores existing captial expenditure and only takes new investments into account</li>
   </ul>
   
   <a class="anchor" id="ref5"></a>
   <h3><sup>5</sup> Home Insulation</h3>
   <ul>
-    <li>Insulation Saving Calculator <a href=http://www.cellulose.org/HomeOwners/CalculateSavings.php>Insulation Saving Calculator</a> (<a href=http://www.cellulose.org/>Cellulose Insulation Manufacturers Association<a>)</li>
-    <li>TE210 Thermal insulation in New Zealand homes: A Status Report <a href=http://www.beaconpathway.co.nz/images/uploads/Final_Report_TE210_Thermal_Insulation_in_NZ.pdf>TE210 Thermal insulation in New Zealand homes: A Status Report</a> (<a href=http://www.beaconpathway.co.nz/>Beacon Pathway Limited<a>)</li>
+      <li>3571 kWh per year saving for 2,000 sq ft house, <a href=http://www.cellulose.org/HomeOwners/CalculateSavings.php>Insulation Saving Calculator</a>, (<a href=http://www.cellulose.org/>Cellulose Insulation Manufacturers Association</a>)</li>
+      <li>250,000 homes with no insulation, <a href=http://www.beaconpathway.co.nz/images/uploads/Final_Report_TE210_Thermal_Insulation_in_NZ.pdf>TE210 Thermal insulation in New Zealand homes: A Status Report</a>, (<a href=http://www.beaconpathway.co.nz/>Beacon Pathway Limited</a>)</li>  </ul>  
   </ul>
   <a class="anchor" id="ref6"></a>
   <h3 id="ref6"><sup>6</sup> Solar Panels</h3>
   <ul>
-    <li>Vector Solar PV Price Quotes <a href=http://vector.co.nz/solar/how-much-will-it-cost>Vector Solar PV Price Quotes</a> (<a href=http://vector.co.nz>Vector<a>)</li>
+      <li>$12,495 for 4kW solar PV installation, <a href=http://vector.co.nz/solar/how-much-will-it-cost>Vector Solar PV Price Quotes</a>, (<a href=http://vector.co.nz>Vector</a>)</li>
+      <li>Typcial generation of solar PV per year, 4kW system = ~5,260 kW, <a href=http://www.energywise.govt.nz/your-home/generating-your-own-energy/pv>Solar electricity generation Information</a>, (<a href=http://www.energywise.govt.nz/>Energy Efficiency and Conservation Authority</a>)</li>
   </ul>
-  
+
   <a class="anchor" id="ref7"></a>
   <h3><sup>7</sup> Windfarms</h3>
-  <ul>
-  <li>TBC</li>
-  </ul>
-  
+    <ul>
+      <li>Investment and operating costs of proposed windfarms, <a href=http://www.med.govt.nz/sectors-industries/energy/energy-modelling/modelling/interactive-electricity-generation-cost-model>Interactive Electricity Generation Cost Model</a>, (<a href=http://www.mbie.govt.nz/>Ministry of Business Innovation and Employment</a>)</li>
+    </ul>
+
   <a class="anchor" id="ref8"></a>
   <h3><sup>8</sup> Electric Cars</h3>
   <ul>
-  <li>TBC</li>
+      <li>Vehicle Fleet Size 3,341,013 vehicles, <a href=http://www.transport.govt.nz/research/newzealandvehiclefleetstatistics/>New Zealand Vehicle Fleet 2013</a>, (<a href=http://www.transport.govt.nz/>Ministry of Transport</a>)</li>
+      <li>Carbon dioxide equivalent emissions (CO2-e) from domestic transport (road, rail, maritime, aviation), <a href=http://www.transport.govt.nz/ourwork/tmif/environmental/ei001/>Environmental impact of transport : Climate change</a>, (<a href=http://www.transport.govt.nz/>Ministry of Transport</a>)</li>
+      <li>TV002 Road VKT (billions) by vehicle type, <a href=http://www.transport.govt.nz/ourwork/tmif/transport-volume/tv002/>Transport volume : Vehicle travel</a>, (<a href=http://www.transport.govt.nz/>Ministry of Transport</a>)</li>
+      <li>Vehicle efficiency, est 8.5l/100km, <a href=http://www.transport.govt.nz/research/newzealandvehiclefleetstatistics/>Fuel Cycle Values</a>, (<a href=http://www.transport.govt.nz/>Ministry of Transport</a>)</li>
+      <li>$39,900 for an Electric Vechicle, <a href=http://www.nissan.co.nz/Cars-Vehicles/LEAF/Range-and-Pricing>Nissan LEAF 2015 Range and Pricing</a>, (<a href=http://www.nissan.co.nz/>Nissan</a>)</li>
   </ul>
-  
+
   <a class="anchor" id="ref9"></a>
   <h3><sup>9</sup> Bicycles</h3>
   <ul>
-  <li>TBC</li>
+      <li>Assuming one bicycle displaces one car from the road</li>
   </ul>
-  
+
   <a class="anchor" id="about"></a>
   <h2>About</h2>
-  <p>GovHack ya ya</p>
+  <p>Powerslide BETA was developed over 46 hours at the <a href="http://govhack.org.nz/">GovHack NZ</a> (Auckland), July 2015</p>
+  <p>Source code available on GitHub <a href="https://github.com/ShockingStories/shocking">https://github.com/ShockingStories/shocking</a>.</p>
+
   <h3>Video</h3>
-  GitHub
+
+  <br>
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/KOwfCuPDoyA" frameborder="0" allowfullscreen></iframe>
+  <br><br>
+
   <h3 id="ref">Team</h3>
-  <h4 id="ref">Ross</h4>
-  <h4 id="ref">Rich</h4>
-  <h4 id="ref">Michael</h4>
-  <h4 id="ref">Martin</h4>
-  <h4 id="ref">Rob</h4>
+  Brought to you by Martin, Michael, Rich, Rob, Ross.
+  
+  <h3>Powered By</h3>
+    <ul>
+      <li>Google Spreadsheets</li>
+      <li>JavaScript</li>
+      <li>D3.js</li>
+      <li>Bootstrap</li>
+      <li>Cloudflare</li>
+    </ul>
+  <h3>Further Development</h3>
+    <ul>
+      <li>Show ROI for actions/li>
+      <li>More Actions: LED Light Bulbs? Different Generation Sources?</li>
+      <li>Add Retail Costs (currently only Generation Costs)</li>
+      <li>Add version showing the impact of individual’s actions - allowing them to decide the best action for themselves.</li>
+      <li>Analysis of Load Profile of production and consumption throughout the day to explore impact of home batteries and other smart grid applications</li>
+      <li>Integrate data from Government API (when available)</li>
+    </ul>
+  <h3>Contact</h3>
+  <a href= "mailto:info@powerslide.nz"><h4>info@powerslide.nz</h4></a>
+
   </body>
 </html>
