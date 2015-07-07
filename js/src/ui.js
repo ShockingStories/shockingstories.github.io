@@ -5,5 +5,5 @@ function powerOff() {
   setTimeout(function(){
     document.body.style.display = 'block';
     document.getElementsByTagName('html')[0].style.backgroundColor = 'none';
-  }, 3000);
+  }, 1000);
 }
