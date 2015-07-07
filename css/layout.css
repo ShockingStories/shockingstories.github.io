@@ -120,8 +120,8 @@ i.fa {
     float: left;
     }
     
-.decisions form input[type=number]#windfarmNumber {\
-    with: 45px;
+.decisions form input[type=number]#windfarmNumber {
+    width: 40px;
 }
 .decisions form .unit {
     float: left;
@@ -182,3 +182,17 @@ sup {
       font-size: 1.0rem;
   }
 }
+ul.team {
+    line-height: 28px;
+}
+
+.linkedin {
+    margin-left: 5px;
+    position: relative;
+    top: -5px;
+}
+
+.twitter-follow-button {
+    margin-left: 5px;
+}
+    
